@@ -5,7 +5,14 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventarioEquipos", "InventarioEquipos\InventarioEquipos.csproj", "{36169A11-6C99-41FE-BE60-712DD57AFD89}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedViews", "SharedViews\SharedViews.csproj", "{0B83347C-9DB8-46B4-BFB0-C09699D0A115}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedCode", "SharedCode\SharedCode.shproj", "{F43E64FC-307B-47DE-B333-35962604FE1A}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SharedCode\SharedCode.projitems*{f43e64fc-307b-47de-b333-35962604fe1a}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -15,6 +22,10 @@ Global
 		{36169A11-6C99-41FE-BE60-712DD57AFD89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36169A11-6C99-41FE-BE60-712DD57AFD89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36169A11-6C99-41FE-BE60-712DD57AFD89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B83347C-9DB8-46B4-BFB0-C09699D0A115}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B83347C-9DB8-46B4-BFB0-C09699D0A115}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B83347C-9DB8-46B4-BFB0-C09699D0A115}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B83347C-9DB8-46B4-BFB0-C09699D0A115}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
