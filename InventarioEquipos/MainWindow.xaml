@@ -1,0 +1,29 @@
+﻿<Window x:Class="InventarioEquipos.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InventarioEquipos"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="500" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid Background="#FFEEEEEE">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="175"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <StackPanel>
+                <Rectangle Height="60" RadiusX="5" RadiusY="5" Margin="5" Fill="White">
+                    <Rectangle.Effect>
+                        <DropShadowEffect Opacity="0.65" ShadowDepth="0"/>
+                    </Rectangle.Effect>
+                </Rectangle>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <Frame/>
+        </Grid>
+    </Grid>
+</Window>
