@@ -24,19 +24,21 @@
                 </Grid>
                 <usercontrol:CatalogControl Name="control_1" Title="Custodias" Subtitle="Subtitlulo"/>
                 <usercontrol:CatalogControl Name="control_2" Title="Equipos" Subtitle="Subtitlulo"/>
-                <usercontrol:CatalogControl Name="control_3" Title="Dispositivos" Subtitle="Subtitlulo"/>
+                <usercontrol:CatalogControl Name="control_3" Title="Dispositivos" Subtitle="Subtitlulo" MouseDown="CatalogControl_MouseDown"/>
                 <usercontrol:CatalogControl Name="control_4" Title="Custodias" Subtitle="Subtitlulo"/>
             </StackPanel>
         </Grid>
 
         <Grid Grid.Column="1" Grid.Row="0">
-            <StackPanel>
-                <Grid Height="40" Background="#049DD9">
-                    
-                </Grid>
-                <Frame x:Name="MainFrame"/>
-                
-            </StackPanel>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid Background="#049DD9" Grid.Row="0">
+
+            </Grid>
+
+            <Frame x:Name="MainFrame" Grid.Row="1"/>
         </Grid>
 
         <Grid Grid.Row="1" Grid.ColumnSpan="2">

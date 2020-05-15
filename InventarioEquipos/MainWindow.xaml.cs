@@ -1,4 +1,5 @@
 ﻿using SharedCode;
+using SharedViews.FrameViews;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,7 +57,7 @@ namespace InventarioEquipos
 
             sub3 = await Task.Run(() =>
             {
-                return $"Dispositivos registrados: {new DatabaseManager().FromDatabaseToSingleDictionary("SELECT COUNT(*) AS TOTAL FROM DISPOSITIVOS")["TOTAL"]}";
+                 return $"Dispositivos registrados: {new DatabaseManager().FromDatabaseToSingleDictionary("SELECT COUNT(*) AS TOTAL FROM DISPOSITIVOS")["TOTAL"]}";
             });
 
             sub4 = await Task.Run(() =>
@@ -83,6 +84,11 @@ namespace InventarioEquipos
                 secCounter--;
 
             txt_refreshlog.Text = $"La informacion se actualizara en: {secCounter} segundo(s)";
+        }
+
+        private void CatalogControl_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            MainFrame.Navigate(new BuscadorDispositivos(progressbar));
         }
     }
 }
