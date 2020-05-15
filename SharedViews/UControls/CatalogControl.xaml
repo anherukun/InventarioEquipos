@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="SharedViews.UControls.CatalogControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SharedViews.UControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="70" d:DesignWidth="175">
+    <Grid>
+        <Rectangle Height="60" RadiusX="5" RadiusY="5" Margin="5" Fill="White">
+            <Rectangle.Effect>
+                <DropShadowEffect Opacity="0.65" ShadowDepth="0"/>
+            </Rectangle.Effect>
+        </Rectangle>
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="19"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="title" Text="{Binding Title}" 
+                       FontWeight="Bold"
+                       FontSize="14" VerticalAlignment="Top"/>
+            <TextBlock x:Name="subtitle" Grid.Row="1"
+                       Text="{Binding Subtitle}" 
+                       FontWeight="SemiBold"
+                       FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -3,27 +3,50 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:InventarioEquipos"
+        xmlns:local="clr-namespace:InventarioEquipos" 
+        xmlns:usercontrol="clr-namespace:SharedViews.UControls;assembly=SharedViews"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="800" WindowStartupLocation="CenterScreen">
-    <Grid Background="#FFEEEEEE">
+        Title="Inventarios" Height="500" Width="800" WindowStartupLocation="CenterScreen">
+    <Grid Background="#F2F2F2">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="175"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
 
-        <Grid Grid.Column="0">
+        <Grid Grid.Column="0" Grid.Row="0">
             <StackPanel>
-                <Rectangle Height="60" RadiusX="5" RadiusY="5" Margin="5" Fill="White">
-                    <Rectangle.Effect>
-                        <DropShadowEffect Opacity="0.65" ShadowDepth="0"/>
-                    </Rectangle.Effect>
-                </Rectangle>
+                <Grid Height="40" Background="#0378A6">
+                    <Button Content="Regresar" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5"/>
+                </Grid>
+                <usercontrol:CatalogControl Name="control_1" Title="Custodias" Subtitle="Subtitlulo"/>
+                <usercontrol:CatalogControl Name="control_2" Title="Equipos" Subtitle="Subtitlulo"/>
+                <usercontrol:CatalogControl Name="control_3" Title="Dispositivos" Subtitle="Subtitlulo"/>
+                <usercontrol:CatalogControl Name="control_4" Title="Custodias" Subtitle="Subtitlulo"/>
             </StackPanel>
         </Grid>
 
-        <Grid Grid.Column="1">
-            <Frame/>
+        <Grid Grid.Column="1" Grid.Row="0">
+            <StackPanel>
+                <Grid Height="40" Background="#049DD9">
+                    
+                </Grid>
+                <Frame x:Name="MainFrame"/>
+                
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+            <StatusBar>
+                <TextBlock x:Name="txt_refreshlog" Text="Se actualizara en: 00 secs"/>
+            </StatusBar>
+            
+            <ProgressBar x:Name="progressbar" Height="17" Width="50" IsIndeterminate="True" 
+                         HorizontalAlignment="Right"
+                         Margin="4"/>
         </Grid>
     </Grid>
 </Window>

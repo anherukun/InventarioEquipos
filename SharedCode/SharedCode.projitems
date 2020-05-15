@@ -10,5 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ApplicationManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DatabaseManager.cs" />
   </ItemGroup>
 </Project>

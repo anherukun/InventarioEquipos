@@ -11,6 +11,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedCode", "SharedCode\Sh
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SharedCode\SharedCode.projitems*{36169a11-6c99-41fe-be60-712dd57afd89}*SharedItemsImports = 4
 		SharedCode\SharedCode.projitems*{f43e64fc-307b-47de-b333-35962604fe1a}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
