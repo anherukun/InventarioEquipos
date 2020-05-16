@@ -23,7 +23,7 @@
             <TextBlock x:Name="subtitle" Grid.Row="1"
                        Text="{Binding Subtitle}" 
                        FontWeight="SemiBold"
-                       FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                       FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
         </Grid>
     </Grid>
 </UserControl>

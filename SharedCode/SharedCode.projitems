@@ -10,7 +10,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ApplicationManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Classes\ConjuntoEquipos.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Classes\Dispositivo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Classes\Misc\Departamento.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Classes\Usuario.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DatabaseManager.cs" />
   </ItemGroup>
 </Project>

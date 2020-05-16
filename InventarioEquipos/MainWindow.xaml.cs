@@ -23,15 +23,10 @@ namespace InventarioEquipos
     /// </summary>
     public partial class MainWindow : Window
     {
-        private int secCounter = 60;
+        private int secCounter = 300;
         public MainWindow()
         {
             InitializeComponent();
-
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += TimerExecution;
-            timer.Start();
 
             UpdateMenuInformation();
         }
@@ -73,22 +68,37 @@ namespace InventarioEquipos
             progressbar.Visibility = Visibility.Hidden;
         }
 
-        private void TimerExecution(object sender, EventArgs e)
+        private void NavigationGoback()
         {
-            if (secCounter == 0)
+            if (MainFrame.CanGoBack)
+                MainFrame.GoBack();
+        }
+        private void NavigationGoto(object c){
+            if (c.GetType() == typeof(BuscadorDispositivos))
             {
-                UpdateMenuInformation();
-                secCounter = 60;
+                txt_titulo.Text = "DISPOSITIVOS";
+                MainFrame.Navigate((BuscadorDispositivos)c);
             }
-            else
-                secCounter--;
-
-            txt_refreshlog.Text = $"La informacion se actualizara en: {secCounter} segundo(s)";
+            else if (c.GetType() == typeof(BuscadorConjuntoEquipos))
+            {
+                txt_titulo.Text = "EQUIPOS";
+                MainFrame.Navigate((BuscadorConjuntoEquipos)c);
+            }
         }
 
         private void CatalogControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            MainFrame.Navigate(new BuscadorDispositivos(progressbar));
+            NavigationGoto(new BuscadorDispositivos(this.progressbar));
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationGoback();
+        }
+
+        private void CatalogControl_MouseDown_1(object sender, MouseButtonEventArgs e)
+        {
+            NavigationGoto(new BuscadorConjuntoEquipos(this.progressbar));
         }
     }
 }

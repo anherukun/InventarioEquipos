@@ -90,6 +90,7 @@ namespace SharedViews.FrameViews
         private async void IniciarBusqueda(string sql)
         {
             progressBar.Visibility = Visibility.Visible;
+            progressBar.IsIndeterminate = true;
 
             dispositivos = await Task.Run(() =>
             {
@@ -140,6 +141,20 @@ namespace SharedViews.FrameViews
             // ACTUALIZAR
             string sql = CrearSQL(cmd_dispositivo.SelectedIndex, cmd_marca.SelectedIndex, txtbox_serie.Text.Trim().ToUpper());
             IniciarBusqueda(sql);
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            // MENU CONTEXTUAL - ABRIR
+            if (lst_registros.SelectedIndex > -1)
+                MessageBox.Show($"Abrir {dispositivos[lst_registros.SelectedIndex].Serie}");
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            // MENU CONTEXTUAL - EDITAR
+            if (lst_registros.SelectedIndex > -1)
+                MessageBox.Show($"Editar {dispositivos[lst_registros.SelectedIndex].Serie}");
         }
     }
 }

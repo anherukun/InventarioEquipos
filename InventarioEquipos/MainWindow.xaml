@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:InventarioEquipos" 
         xmlns:usercontrol="clr-namespace:SharedViews.UControls;assembly=SharedViews"
         mc:Ignorable="d"
-        Title="Inventarios" Height="500" Width="800" WindowStartupLocation="CenterScreen">
+        Title="Inventarios" Height="500" Width="800" WindowStartupLocation="CenterScreen" FontFamily="Montserrat">
     <Grid Background="#F2F2F2">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="175"/>
@@ -20,10 +20,10 @@
         <Grid Grid.Column="0" Grid.Row="0">
             <StackPanel>
                 <Grid Height="40" Background="#0378A6">
-                    <Button Content="Regresar" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5"/>
+                    <Button Content="Regresar" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5" Click="Button_Click"/>
                 </Grid>
                 <usercontrol:CatalogControl Name="control_1" Title="Custodias" Subtitle="Subtitlulo"/>
-                <usercontrol:CatalogControl Name="control_2" Title="Equipos" Subtitle="Subtitlulo"/>
+                <usercontrol:CatalogControl Name="control_2" Title="Equipos" Subtitle="Subtitlulo" MouseDown="CatalogControl_MouseDown_1"/>
                 <usercontrol:CatalogControl Name="control_3" Title="Dispositivos" Subtitle="Subtitlulo" MouseDown="CatalogControl_MouseDown"/>
                 <usercontrol:CatalogControl Name="control_4" Title="Custodias" Subtitle="Subtitlulo"/>
             </StackPanel>
@@ -35,15 +35,18 @@
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid Background="#049DD9" Grid.Row="0">
-
+                <TextBlock x:Name="txt_titulo" Text="INICIO" 
+                           VerticalAlignment="Center" HorizontalAlignment="Left"
+                           FontSize="24" FontWeight="Bold" Foreground="White"
+                           Margin="16,0"/>
             </Grid>
 
-            <Frame x:Name="MainFrame" Grid.Row="1"/>
+            <Frame x:Name="MainFrame" Grid.Row="1" NavigationUIVisibility="Hidden"/>
         </Grid>
 
         <Grid Grid.Row="1" Grid.ColumnSpan="2">
             <StatusBar>
-                <TextBlock x:Name="txt_refreshlog" Text="Se actualizara en: 00 secs"/>
+                <TextBlock x:Name="txt_refreshlog" Text="..."/>
             </StatusBar>
             
             <ProgressBar x:Name="progressbar" Height="17" Width="50" IsIndeterminate="True" 

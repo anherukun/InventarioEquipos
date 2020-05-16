@@ -1,0 +1,131 @@
+﻿<Window x:Class="SharedViews.Ventanas.VisorConjuntoEquipo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SharedViews.Ventanas"
+        mc:Ignorable="d"
+        Title="VisorConjuntoEquipo" Height="600" Width="425" Background="#F2F2F2" ResizeMode="CanMinimize" FontFamily="Montserrat">
+    <Grid>
+        <ProgressBar x:Name="progressbar" Height="5" IsIndeterminate="True" VerticalAlignment="Top"/>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
+            <StackPanel Orientation="Vertical">
+                
+                <StackPanel Margin="16, 16, 0, 16">
+                    <TextBlock Text="DETALLES"
+                       FontSize="24" FontWeight="Bold"/>
+
+                    <TextBlock Text="INFORMACION GENERAL" Margin="0,8"
+                           FontSize="16" FontWeight="DemiBold"/>
+                    <StackPanel Orientation="Horizontal" Margin="16,4">
+                        <TextBlock Text="HOSTNAME" Width="120"
+                               FontWeight="DemiBold"/>
+                        <TextBlock x:Name="txt_hostname" Text="SIN DATOS..."/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="16,4">
+                        <TextBlock Text="PROCESADOR" Width="120"
+                               FontWeight="DemiBold"/>
+                        <TextBlock x:Name="txt_serieProcesador" Text="SIN DATOS..."/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="16,4">
+                        <TextBlock Text="MARCA" Width="120"
+                               FontWeight="DemiBold"/>
+                        <TextBlock x:Name="txt_marca" Text="SIN DATOS..."/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="16,4">
+                        <TextBlock Text="MODELO" Width="120"
+                               FontWeight="DemiBold"/>
+                        <TextBlock x:Name="txt_modelo" Text="SIN DATOS..."/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="16,4">
+                        <TextBlock Text="DEPARTAMENTO" Width="120"
+                               FontWeight="DemiBold"/>
+                        <TextBlock x:Name="txt_departamento" Text="SIN DATOS..." Width="218" TextWrapping="Wrap"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="16,4">
+                        <TextBlock Text="UBICACION FISICA" Width="120"
+                               FontWeight="DemiBold"/>
+                        <TextBlock x:Name="txt_ubicacionfisica" Text="SIN DATOS..." Width="218" TextWrapping="Wrap"/>
+                    </StackPanel>
+
+                    <TextBlock Text="DISPOSITIVOS Y PERIFERICOS" Margin="0,8"
+                           FontSize="16" FontWeight="DemiBold"/>
+
+                    <ListView x:Name="lst_dispositivos" Height="120" Margin="8,0,8,0">
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="False">
+                                <GridViewColumn DisplayMemberBinding="{Binding TDispositivo}" Header="DISPOSITIVO"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Marca}" Header="MARCA"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Modelo}" Header="MODELO"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Serie}" Header="SERIE"/>
+                            </GridView>
+                        </ListView.View>
+                        <ListView.Resources>
+                            <ContextMenu x:Key="ItemContextMenu">
+                                <MenuItem Header="Abrir" Command="{Binding Path=DataContext.MoreInfo, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Background="WhiteSmoke"/>
+                                <MenuItem Header="Editar" Command="{Binding Path=DataContext.MoreInfo, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Background="WhiteSmoke"/>
+                            </ContextMenu>
+                        </ListView.Resources>
+
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}" >
+                                <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+
+                    <TextBlock Text="DATOS DEL USUARIO" Margin="0,8"
+                           FontSize="16" FontWeight="DemiBold"/>
+                    <StackPanel Orientation="Horizontal" Margin="16,4">
+                        <TextBlock Text="USERNAME" Width="120"
+                               FontWeight="DemiBold"/>
+                        <TextBlock x:Name="txt_username" Text="SIN DATOS..." TextTrimming="CharacterEllipsis"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="16,4">
+                        <TextBlock Text="NOMBRE EN DIRECTORIO" Width="120" TextWrapping="Wrap"
+                               FontWeight="DemiBold"/>
+                        <TextBlock x:Name="txt_usuariodirectorio" Text="SIN DATOS..." TextWrapping="Wrap" Width="218"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="16,4">
+                        <TextBlock Text="CORREO ELECTRONICO" Width="120" TextWrapping="Wrap"
+                               FontWeight="DemiBold"/>
+                        <TextBlock x:Name="txt_correo" Text="SIN DATOS..."/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="16,4">
+                        <TextBlock Text="PERFIL MIGRADO" Width="120" TextWrapping="Wrap"
+                               FontWeight="DemiBold"/>
+                        <TextBlock x:Name="txt_perfilmigrado" Text="SIN DATOS..."/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="16,4">
+                        <TextBlock Text="BUZON MIGRADO" Width="120" TextWrapping="Wrap"
+                               FontWeight="DemiBold"/>
+                        <TextBlock x:Name="txt_buzonmigrado" Text="SIN DATOS..."/>
+                    </StackPanel>
+
+                    <TextBlock Text="PERMISOS DEL USUARIO" Margin="0,8"
+                           FontSize="16" FontWeight="DemiBold"/>
+                    <ListView x:Name="lst_permisos" Height="120" Margin="8,0,8,0">
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="False">
+                                <GridViewColumn DisplayMemberBinding="{Binding TDispositivo}" Header="PERMISO"/>
+                            </GridView>
+                        </ListView.View>
+                        <ListView.Resources>
+                            <ContextMenu x:Key="ItemContextMenu">
+                                <MenuItem Header="Abrir" Command="{Binding Path=DataContext.MoreInfo, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Background="WhiteSmoke"/>
+                                <MenuItem Header="Editar" Command="{Binding Path=DataContext.MoreInfo, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Background="WhiteSmoke"/>
+                            </ContextMenu>
+                        </ListView.Resources>
+
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}" >
+                                <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                    
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

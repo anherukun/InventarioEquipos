@@ -1,4 +1,4 @@
-﻿<Page x:Class="SharedViews.FrameViews.BuscadorDispositivos"
+﻿<Page x:Class="SharedViews.FrameViews.BuscadorConjuntoEquipos"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:SharedViews.FrameViews"
       mc:Ignorable="d" 
       d:DesignHeight="400" d:DesignWidth="800"
-      Title="BuscadorDispositivos" Background="#F2F2F2">
+      Title="BuscadorConjuntoEquipos" Background="#F2F2F2">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -27,8 +27,8 @@
                         <ColumnDefinition/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="DISPOSITIVO" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="8, 0"/>
-                    <ComboBox x:Name="cmd_dispositivo" Grid.Column="1"/>
+                    <TextBlock Text="SERIE" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="8, 0"/>
+                    <TextBox x:Name="txtbox_serie" Grid.Column="1"/>
                 </Grid>
 
                 <Grid Grid.Column="1">
@@ -36,8 +36,8 @@
                         <ColumnDefinition/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="MARCA" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="8, 0"/>
-                    <ComboBox x:Name="cmd_marca" Grid.Column="1"/>
+                    <TextBlock Text="HOSTNAME" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="8, 0"/>
+                    <TextBox x:Name="txt_hostname" Grid.Column="1"/>
                 </Grid>
             </Grid>
 
@@ -51,8 +51,8 @@
                         <ColumnDefinition/>
                         <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="SERIE" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="8, 0"/>
-                    <TextBox x:Name="txtbox_serie" Grid.Column="1"/>
+                    <TextBlock Text="DEPARTAMENTO" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="8, 0"/>
+                    <ComboBox x:Name="cmd_departamento" Grid.Column="1"/>
                 </Grid>
 
                 <Grid Grid.Column="1">
@@ -62,14 +62,13 @@
         </StackPanel>
 
         <Grid Grid.Row="1" Margin="16,8">
-            <ListView x:Name="lst_registros" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <ListView x:Name="lst_registros" MouseDoubleClick="lst_registros_MouseDoubleClick">
                 <ListView.View>
                     <GridView AllowsColumnReorder="False">
-                        <GridViewColumn DisplayMemberBinding="{Binding TDispositivo}" Header="TIPO DE DISPOSITIVO"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Marca}" Header="MARCA"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Serie}" Header="SERIE"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Modelo}" Header="MODELO"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Inventario}" Header="INVENTARIO"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Departamento}" Header="DEPARTAMENTO"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding UbicacionFisica}" Header="UBICACION FISICA"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Serie}" Header="SERIE DEL PROCESADOR"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Hostname}" Header="HOSTNAME"/>
                     </GridView>
                 </ListView.View>
                 <ListView.Resources>
@@ -86,6 +85,6 @@
                 </ListView.ItemContainerStyle>
             </ListView>
         </Grid>
-        
+
     </Grid>
 </Page>

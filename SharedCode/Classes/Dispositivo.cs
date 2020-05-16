@@ -65,14 +65,21 @@ namespace SharedCode.Classes
         {
             if (keyValues.Count > 0)
             {
-                Dispositivo d = new Dispositivo()
-                {
-                    Serie = (string)keyValues["SERIE"],
-                    TDispositivo = (string)keyValues["DISPOSITIVO"],
-                    Marca = (string)keyValues["MARCA"],
-                    Modelo = (string)keyValues["MODELO"],
-                    Inventario = (string)keyValues["INVENTARIO"]
-                };
+                Dispositivo d = new Dispositivo();
+                if (keyValues["SERIE"].GetType() != typeof(System.DBNull))
+                    d.Serie = ((string)keyValues["SERIE"]).ToUpper();
+
+                if (keyValues["DISPOSITIVO"].GetType() != typeof(System.DBNull))
+                    d.TDispositivo = ((string)keyValues["DISPOSITIVO"]).ToUpper();
+
+                if (keyValues["MARCA"].GetType() != typeof(System.DBNull))
+                    d.Marca = ((string)keyValues["MARCA"]).ToUpper();
+
+                if (keyValues["MODELO"].GetType() != typeof(System.DBNull))
+                    d.Modelo = ((string)keyValues["MODELO"]).ToUpper();
+
+                if (keyValues["INVENTARIO"].GetType() != typeof(System.DBNull))
+                    d.Inventario = ((string)keyValues["INVENTARIO"]).ToUpper();
 
                 return d;
             }
