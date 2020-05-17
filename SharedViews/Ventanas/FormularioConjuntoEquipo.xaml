@@ -25,7 +25,7 @@
                         <TextBlock Text="PROCESADOR" Width="120"
                                    FontWeight="DemiBold"
                                    VerticalAlignment="Center"/>
-                        <ComboBox x:Name="cmd_serieprocesador" Width="218"/>
+                        <ComboBox x:Name="cmd_serieprocesador" Width="218" SelectionChanged="cmd_serieprocesador_SelectionChanged"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="16,4">
                         <TextBlock Text="MARCA" Width="120"

@@ -67,6 +67,9 @@
     <Compile Include="Ventanas\FormularioConjuntoEquipo.xaml.cs">
       <DependentUpon>FormularioConjuntoEquipo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Ventanas\FormularioDispositivo.xaml.cs">
+      <DependentUpon>FormularioDispositivo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Ventanas\VisorConjuntoEquipo.xaml.cs">
       <DependentUpon>VisorConjuntoEquipo.xaml</DependentUpon>
     </Compile>
@@ -95,6 +98,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Ventanas\FormularioConjuntoEquipo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ventanas\FormularioDispositivo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

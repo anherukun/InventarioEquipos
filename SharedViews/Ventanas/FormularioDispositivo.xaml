@@ -1,0 +1,55 @@
+﻿<Window x:Class="SharedViews.Ventanas.FormularioDispositivo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SharedViews.Ventanas"
+        mc:Ignorable="d"
+        Title="FormularioConjuntoEquipo" Height="310" Width="425" Background="#F2F2F2" ResizeMode="NoResize" FontFamily="Montserrat" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
+    <Grid>
+        <StackPanel Margin="16" VerticalAlignment="Top">
+            <TextBlock Text="NUEVO DISPOSITIVO"
+                       FontSize="24" FontWeight="Bold"/>
+
+            <TextBlock Text="INFORMACION GENERAL" Margin="0,8"
+                           FontSize="16" FontWeight="DemiBold"/>
+            <StackPanel Orientation="Horizontal" Margin="16,4">
+                <TextBlock Text="SERIE" Width="120"
+                               FontWeight="DemiBold"/>
+                <TextBox x:Name="txtbox_serie" Text="" Width="218"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="16,4">
+                <TextBlock Text="TIPO DE DISPOSITIVO" Width="120"
+                                   FontWeight="DemiBold"
+                                   VerticalAlignment="Center" TextWrapping="Wrap"/>
+                <ComboBox x:Name="cmd_tdispositivo" Width="218" SelectionChanged="cmd_serieprocesador_SelectionChanged" 
+                                  IsEditable="True"
+                                  VerticalAlignment="Center"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="16,4">
+                <TextBlock Text="MARCA" Width="120"
+                               FontWeight="DemiBold"/>
+                <ComboBox x:Name="cmd_marca" Width="218" IsEditable="True"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="16,4">
+                <TextBlock Text="MODELO" Width="120"
+                               FontWeight="DemiBold"/>
+                <ComboBox x:Name="cmd_modelo" Width="218"
+                                  IsEditable="True"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="16,4">
+                <TextBlock Text="INVENTARIO" Width="120"
+                               FontWeight="DemiBold"/>
+                <TextBox x:Name="txtbox_inventario" Text="" Width="218"/>
+            </StackPanel>
+
+            <Button Height="24" Margin="8" Width="90" HorizontalAlignment="Right" Click="Button_Click_3">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,2">
+                    <Image Source="/SharedViews;component/Imgs/tick.png"/>
+                    <TextBlock VerticalAlignment="center" Text="Aceptar"
+                                       Margin="4,0"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>
