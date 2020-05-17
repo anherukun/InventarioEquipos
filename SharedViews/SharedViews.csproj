@@ -64,6 +64,9 @@
     <Compile Include="UControls\CatalogControl.xaml.cs">
       <DependentUpon>CatalogControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Ventanas\FormularioConjuntoEquipo.xaml.cs">
+      <DependentUpon>FormularioConjuntoEquipo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Ventanas\VisorConjuntoEquipo.xaml.cs">
       <DependentUpon>VisorConjuntoEquipo.xaml</DependentUpon>
     </Compile>
@@ -88,6 +91,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="UControls\CatalogControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ventanas\FormularioConjuntoEquipo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -121,6 +128,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imgs\minus.png" />
+    <Resource Include="Imgs\plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imgs\tick.png" />
   </ItemGroup>
   <Import Project="..\SharedCode\SharedCode.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

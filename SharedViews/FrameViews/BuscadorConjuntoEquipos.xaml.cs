@@ -32,10 +32,11 @@ namespace SharedViews.FrameViews
             public string Hostname { get; set; }
         }
         private List<ConjuntoEquipos> equipos = new List<ConjuntoEquipos>();
-        private List<Departamento> departamentos = new List<Departamento>();
+        private List<string> departamentos = new List<string>();
         private List<string> marcas = new List<string>();
 
         private ProgressBar progressBar;
+
         public BuscadorConjuntoEquipos(ProgressBar progressBar)
         {
             InitializeComponent();
@@ -49,16 +50,24 @@ namespace SharedViews.FrameViews
             progressBar.Visibility = Visibility.Visible;
             progressBar.IsIndeterminate = true;
 
-            cmd_departamento.Items.Add("(TODOS)");
             departamentos = await Task.Run(() =>
             {
-                return Departamento.FromDictionaryListToList(new DatabaseManager().FromDatabaseToDictionary("SELECT * FROM MISC_DEPARTAMENTOS"));
+                List<Dictionary<string, object>> values1 = new DatabaseManager().FromDatabaseToDictionary("SELECT DISTINCT DEPTO FROM CONJUNTO_EQUIPOS");
+                List<string> result = new List<string>();
+                result.Add("(TODOS)");
+
+                if (values1 != null && values1.Count > 0)
+                    foreach (var item in values1)
+                    {
+                        result.Add((string)item["DEPTO"]);
+                    }
+                return result;
             });
 
             await Task.Run(() =>
             {
                 foreach (var item in departamentos)
-                    Application.Current.Dispatcher.Invoke(new Action(() => { cmd_departamento.Items.Add($"{item.Clave}\t| {item.Nombre}"); }));
+                    Application.Current.Dispatcher.Invoke(new Action(() => { cmd_departamento.Items.Add(item); }));
             });
 
             cmd_departamento.SelectedIndex = 0;
@@ -78,32 +87,12 @@ namespace SharedViews.FrameViews
 
             progressBar.Maximum = equipos.Count;
             progressBar.Value = 0;
-            List<BindingRegister> bindings = new List<BindingRegister>();
-
-
-            await Task.Run(() =>
-            {
-                foreach (var item in equipos)
-                {
-                    BindingRegister bind = new BindingRegister();
-
-                    bind.Departamento = $"{item.Departamento}";
-                    bind.Hostname = $"{item.Hostname}";
-                    bind.Serie = $"{item.Procesador}";
-                    bind.UbicacionFisica = $"{item.UbicacionFisica}";
-
-                    bindings.Add(bind);
-                    Application.Current.Dispatcher.Invoke(new Action(() => { progressBar.Value += 1; }));
-                }
-            });
-            
-
 
             await Task.Run(() =>
             {
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
-                    lst_registros.ItemsSource = bindings;
+                    lst_registros.ItemsSource = equipos;
                 }));
             });
 
@@ -120,7 +109,7 @@ namespace SharedViews.FrameViews
             else
             {
                 if (departamentosIndex != 0)
-                    sql = sql.Replace("{param-1}", $"CONJUNTO_EQUIPOS.DEPTO LIKE \"{departamentos[departamentosIndex-1].Nombre}\" ");
+                    sql = sql.Replace("{param-1}", $"CONJUNTO_EQUIPOS.DEPTO LIKE \"{departamentos[departamentosIndex]}\" ");
                 else
                     sql = sql.Replace("{param-1} AND", "").Replace("  ", " ");
 
@@ -163,11 +152,11 @@ namespace SharedViews.FrameViews
 
         }
 
-        private void lst_registros_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            // ABRIR DETALLES DOBLECLICK
-            if (lst_registros.SelectedIndex > -1)
-                OpenDetails(equipos[lst_registros.SelectedIndex]);
+            // ABRIR FORMULARIOCONJUNTOEQUIPO
+            FormularioConjuntoEquipo form = new FormularioConjuntoEquipo();
+            form.Show();
         }
     }
 }

@@ -56,6 +56,7 @@ namespace SharedViews.Ventanas
             txt_serieProcesador.Text = Procesador.Serie.ToUpper();
             txt_marca.Text = Procesador.Marca.ToUpper();
             txt_modelo.Text = Procesador.Modelo.ToUpper();
+            txt_arquitectura.Text = ConjuntoEquipo.Arquitectura == 0 ? "SIN DATOS..." : $"{ConjuntoEquipo.Arquitectura} BITS";
 
             if (Usuario != null)
             {

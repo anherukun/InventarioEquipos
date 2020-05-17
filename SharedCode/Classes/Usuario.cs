@@ -16,10 +16,10 @@ namespace SharedCode.Classes
         public string Contrasena { get; set; }
 
         /// <summary>
-        /// Transforma una <see cref="List{T}"/> de elementos de un <see cref="Dictionary{TKey, TValue}"/> en una <see cref="List{T}"/> de objetos de la clase <see cref="Dispositivo"/>
+        /// Transforma una <see cref="List{T}"/> de elementos de un <see cref="Dictionary{TKey, TValue}"/> en una <see cref="List{T}"/> de objetos de la clase <see cref="Usuario"/>
         /// </summary>
         /// <param name="keyValues"><see cref="List{T}"/> de elementos <see cref="Dictionary{TKey, TValue}"/> resultante a una busqueda de la base de datos</param>
-        /// <returns><see cref="List{T}"/> de objetos de la case <see cref="Dispositivo"/></returns>
+        /// <returns><see cref="List{T}"/> de objetos de la case <see cref="Usuario"/></returns>
         public static List<Usuario> FromDictionaryListToList(List<Dictionary<string, object>> keyValues)
         {
             if (keyValues.Count > 0)
@@ -69,10 +69,10 @@ namespace SharedCode.Classes
         }
 
         /// <summary>
-        /// Transforma un <see cref="Dictionary{TKey, TValue}"/> a un objeto de clase <see cref="Dispositivo"/>
+        /// Transforma un <see cref="Dictionary{TKey, TValue}"/> a un objeto de clase <see cref="Usuario"/>
         /// </summary>
         /// <param name="keyValues"><see cref="Dictionary{TKey, TValue}"/> resultante a una busqueda de la base de datos</param>
-        /// <returns>objeto de la clase <see cref="Dispositivo"/></returns>
+        /// <returns>objeto de la clase <see cref="Usuario"/></returns>
         public static Usuario FromDictionarySingle(Dictionary<string, object> keyValues)
         {
             if (keyValues.Count > 0)

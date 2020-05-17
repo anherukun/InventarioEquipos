@@ -15,6 +15,11 @@ namespace SharedCode.Classes
         public int Usuario { get; set; }
         public int Arquitectura { get; set; }
 
+        /// <summary>
+        /// Transforma un <see cref="Dictionary{TKey, TValue}"/> a un objeto de clase <see cref="Usuario"/>
+        /// </summary>
+        /// <param name="keyValues"><see cref="Dictionary{TKey, TValue}"/> resultante a una busqueda de la base de datos</param>
+        /// <returns>objeto de la clase <see cref="ConjuntoEquipos"/></returns>
         public static ConjuntoEquipos FromDictionarySingle(Dictionary<string, object> keyValues)
         {
             if (keyValues != null && keyValues.Count > 0)
@@ -40,9 +45,11 @@ namespace SharedCode.Classes
             return null;
         }
 
-        /// <summary>Costruye una lista de elementos con los datos obtenidos de un diccionario</summary>
-        /// <param name="data">Lista de diccionarios con los datos de la Base de Datos</param>
-        /// <returns>Lista de ConjuntoEquipos</returns>
+        /// <summary>
+        /// Transforma un <see cref="Dictionary{TKey, TValue}"/> a un objeto de clase <see cref="Usuario"/>
+        /// </summary>
+        /// <param name="keyValues"><see cref="Dictionary{TKey, TValue}"/> resultante a una busqueda de la base de datos</param>
+        /// <returns>objeto de la clase <see cref="ConjuntoEquipos"/></returns>
         public static List<ConjuntoEquipos> FromDictionaryListToList(List<Dictionary<string, object>> keyValues)
         {
             List<ConjuntoEquipos> ls = new List<ConjuntoEquipos>();

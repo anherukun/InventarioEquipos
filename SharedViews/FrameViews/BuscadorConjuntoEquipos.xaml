@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="125"/>
             <RowDefinition/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Margin="16,16,16,8" VerticalAlignment="Top">
@@ -62,12 +63,12 @@
         </StackPanel>
 
         <Grid Grid.Row="1" Margin="16,8">
-            <ListView x:Name="lst_registros" MouseDoubleClick="lst_registros_MouseDoubleClick">
+            <ListView x:Name="lst_registros">
                 <ListView.View>
                     <GridView AllowsColumnReorder="False">
                         <GridViewColumn DisplayMemberBinding="{Binding Departamento}" Header="DEPARTAMENTO"/>
                         <GridViewColumn DisplayMemberBinding="{Binding UbicacionFisica}" Header="UBICACION FISICA"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Serie}" Header="SERIE DEL PROCESADOR"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Procesador}" Header="SERIE DEL PROCESADOR"/>
                         <GridViewColumn DisplayMemberBinding="{Binding Hostname}" Header="HOSTNAME"/>
                     </GridView>
                 </ListView.View>
@@ -84,6 +85,12 @@
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <StackPanel Margin="16,0" HorizontalAlignment="Right">
+                <Button Content="Registrar equipo" Width="150" Click="Button_Click_1"/>
+            </StackPanel>
         </Grid>
 
     </Grid>

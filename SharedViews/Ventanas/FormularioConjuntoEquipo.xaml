@@ -1,16 +1,15 @@
-﻿<Window x:Class="SharedViews.Ventanas.VisorConjuntoEquipo"
+﻿<Window x:Class="SharedViews.Ventanas.FormularioConjuntoEquipo"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SharedViews.Ventanas"
         mc:Ignorable="d"
-        Title="VisorConjuntoEquipo" Height="600" Width="425" Background="#F2F2F2" ResizeMode="CanMinimize" FontFamily="Montserrat">
+        Title="FormularioConjuntoEquipo" Height="600" Width="425" Background="#F2F2F2" ResizeMode="NoResize" FontFamily="Montserrat" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
     <Grid>
-        <ProgressBar x:Name="progressbar" Height="5" IsIndeterminate="True" VerticalAlignment="Top"/>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
             <StackPanel Orientation="Vertical">
-                
+
                 <StackPanel Margin="16, 16, 0, 16">
                     <TextBlock Text="DETALLES"
                        FontSize="24" FontWeight="Bold"/>
@@ -20,12 +19,13 @@
                     <StackPanel Orientation="Horizontal" Margin="16,4">
                         <TextBlock Text="HOSTNAME" Width="120"
                                FontWeight="DemiBold"/>
-                        <TextBlock x:Name="txt_hostname" Text="SIN DATOS..."/>
+                        <TextBox x:Name="txtbox_hostname" Text="" Width="218"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="16,4">
                         <TextBlock Text="PROCESADOR" Width="120"
-                               FontWeight="DemiBold"/>
-                        <TextBlock x:Name="txt_serieProcesador" Text="SIN DATOS..."/>
+                                   FontWeight="DemiBold"
+                                   VerticalAlignment="Center"/>
+                        <ComboBox x:Name="cmd_serieprocesador" Width="218"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="16,4">
                         <TextBlock Text="MARCA" Width="120"
@@ -39,22 +39,40 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="16,4">
                         <TextBlock Text="ARQUITECTURA" Width="120"
-                               FontWeight="DemiBold"/>
-                        <TextBlock x:Name="txt_arquitectura" Text="SIN DATOS..."/>
+                                   FontWeight="DemiBold"/>
+                        <TextBox x:Name="txtbox_arquitectura" Text="" Width="218"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="16,4">
                         <TextBlock Text="DEPARTAMENTO" Width="120"
-                               FontWeight="DemiBold"/>
-                        <TextBlock x:Name="txt_departamento" Text="SIN DATOS..." Width="218" TextWrapping="Wrap"/>
+                                   FontWeight="DemiBold"
+                                   VerticalAlignment="Center"/>
+                        <ComboBox x:Name="cmd_departamento" Width="218"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="16,4">
                         <TextBlock Text="UBICACION FISICA" Width="120"
-                               FontWeight="DemiBold"/>
-                        <TextBlock x:Name="txt_ubicacionfisica" Text="SIN DATOS..." Width="218" TextWrapping="Wrap"/>
+                                   FontWeight="DemiBold"/>
+                        <TextBox x:Name="txtbox_ubicacionfisica" Width="218"/>
                     </StackPanel>
 
                     <TextBlock Text="DISPOSITIVOS Y PERIFERICOS" Margin="0,8"
                            FontSize="16" FontWeight="DemiBold"/>
+
+                    <StackPanel Orientation="Horizontal" Margin="8,0,0,8">
+                        <Button Height="24" Width="90" Click="Button_Click">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,2">
+                                <Image Source="/SharedViews;component/Imgs/plus.png"/>
+                                <TextBlock VerticalAlignment="center" Text="Agregar"
+                                           Margin="4,0"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Height="24" Margin="8,0" Width="90" Click="Button_Click_1">
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,2">
+                                <Image Source="/SharedViews;component/Imgs/minus.png"/>
+                                <TextBlock VerticalAlignment="center" Text="Quitar"
+                                           Margin="4,0"/>
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
 
                     <ListView x:Name="lst_dispositivos" Height="120" Margin="8,0,8,0">
                         <ListView.View>
@@ -80,11 +98,12 @@
                     </ListView>
 
                     <TextBlock Text="DATOS DEL USUARIO" Margin="0,8"
-                           FontSize="16" FontWeight="DemiBold"/>
+                           FontSize="16" FontWeight="DemiBold"
+                               VerticalAlignment="Center"/>
                     <StackPanel Orientation="Horizontal" Margin="16,4">
                         <TextBlock Text="USERNAME" Width="120"
                                FontWeight="DemiBold"/>
-                        <TextBlock x:Name="txt_username" Text="SIN DATOS..." TextTrimming="CharacterEllipsis"/>
+                        <ComboBox x:Name="cmd_username" Width="218"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="16,4">
                         <TextBlock Text="NOMBRE EN DIRECTORIO" Width="120" TextWrapping="Wrap"
@@ -109,28 +128,25 @@
 
                     <TextBlock Text="PERMISOS DEL USUARIO" Margin="0,8"
                            FontSize="16" FontWeight="DemiBold"/>
+
                     <ListView x:Name="lst_permisos" Height="120" Margin="8,0,8,0">
                         <ListView.View>
                             <GridView AllowsColumnReorder="False">
                                 <GridViewColumn DisplayMemberBinding="{Binding TDispositivo}" Header="PERMISO"/>
                             </GridView>
                         </ListView.View>
-                        <ListView.Resources>
-                            <ContextMenu x:Key="ItemContextMenu">
-                                <MenuItem Header="Abrir" Command="{Binding Path=DataContext.MoreInfo, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Background="WhiteSmoke"/>
-                                <MenuItem Header="Editar" Command="{Binding Path=DataContext.MoreInfo, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Background="WhiteSmoke"/>
-                            </ContextMenu>
-                        </ListView.Resources>
-
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListViewItem}" >
-                                <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
-                            </Style>
-                        </ListView.ItemContainerStyle>
                     </ListView>
-                    
+                    <Button Height="24" Margin="0,8,8,0" Width="90" HorizontalAlignment="Right" Click="Button_Click_3">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,2">
+                            <Image Source="/SharedViews;component/Imgs/tick.png"/>
+                            <TextBlock VerticalAlignment="center" Text="Aceptar"
+                                       Margin="4,0"/>
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
+
+        <ProgressBar x:Name="progressbar" Height="5" IsIndeterminate="True" VerticalAlignment="Top"/>
     </Grid>
 </Window>
