@@ -98,7 +98,10 @@ namespace SharedViews.Ventanas
             }
             else
             {
-                MessageBox.Show("Añadir nuevo");
+                FormularioDispositivo form = new FormularioDispositivo();
+                form.Owner = this;
+                form.ShowDialog();
+
                 cmd_serieprocesador.SelectedIndex = -1;
             }
         }
