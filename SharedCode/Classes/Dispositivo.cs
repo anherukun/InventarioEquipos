@@ -12,6 +12,12 @@ namespace SharedCode.Classes
         public string Modelo { get; set; }
         public string Inventario { get; set; }
 
+        public static string GetInsertSQL(Dispositivo dispositivo)
+        {
+            return $"INSERT INTO DISPOSITIVOS (SERIE, MODELO, DISPOSITIVO, MARCA, INVENTARIO) " +
+                $"VALUES (\"{dispositivo.Serie}\", \"{dispositivo.Modelo}\", \"{dispositivo.TDispositivo}\", \"{dispositivo.Marca}\", \"{dispositivo.Inventario}\")";
+        }
+
         /// <summary>
         /// Transforma una <see cref="List{T}"/> de elementos de un <see cref="Dictionary{TKey, TValue}"/> en una <see cref="List{T}"/> de objetos de la clase <see cref="Dispositivo"/>
         /// </summary>

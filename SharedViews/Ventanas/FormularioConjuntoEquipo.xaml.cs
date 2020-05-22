@@ -23,7 +23,8 @@ namespace SharedViews.Ventanas
     public partial class FormularioConjuntoEquipo : Window
     {
         private List<Dispositivo> procesadores = new List<Dispositivo>();
-        private List<Departamento> departamentos = new List<Departamento>();
+        private List<Usuario> usuarios = new List<Usuario>();
+        private List<string> departamentos = new List<string>();
 
         public FormularioConjuntoEquipo()
         {
@@ -45,26 +46,50 @@ namespace SharedViews.Ventanas
                 cmd_username.Items.Clear();
 
             cmd_serieprocesador.Items.Add("(AÑADIR NUEVO)");
-            cmd_departamento.Items.Add("(AÑADIR NUEVO)");
             cmd_username.Items.Add("(AÑADIR NUEVO)");
-
-            
 
             procesadores = await Task.Run(() =>
             {
-                return Dispositivo.FromDictionaryListToList(new DatabaseManager().FromDatabaseToDictionary("SELECT * FROM DISPOSITIVOS WHERE DISPOSITIVOS.DISPOSITIVO LIKE \"PROCESADOR\" AND DISPOSITIVOS.SERIE NOT IN (SELECT DISTINCT PROCESADOR FROM CONJUNTO_EQUIPOS)"));
+                return Dispositivo.FromDictionaryListToList(new DatabaseManager().FromDatabaseToDictionary("SELECT * FROM DISPOSITIVOS WHERE (DISPOSITIVOS.DISPOSITIVO LIKE \"PROCESADOR\" " +
+                    "OR DISPOSITIVOS.DISPOSITIVO LIKE \"LAPTOP\") " +
+                    "AND DISPOSITIVOS.SERIE NOT IN (SELECT DISTINCT PROCESADOR FROM CONJUNTO_EQUIPOS)"));
             });
 
-            foreach (var item in procesadores)
-                cmd_serieprocesador.Items.Add($"{item.Serie}");
+            if (procesadores != null && procesadores.Count > 0)
+                foreach (var item in procesadores)
+                    cmd_serieprocesador.Items.Add($"{item.Serie}");
 
             departamentos = await Task.Run(() =>
             {
-                return Departamento.FromDictionaryListToList(new DatabaseManager().FromDatabaseToDictionary("SELECT * FROM MISC_DEPARTAMENTOS ORDER BY MISC_DEPARTAMENTOS.NOMBRE ASC"));
+                List<Dictionary<string, object>> values1 = new DatabaseManager().FromDatabaseToDictionary("SELECT DISTINCT DEPTO FROM CONJUNTO_EQUIPOS");
+                List<string> result = new List<string>();
+
+                if (values1 != null && values1.Count > 0)
+                    foreach (var item in values1)
+                    {
+                        result.Add((string)item["DEPTO"]);
+                    }
+                return result;
             });
 
-            foreach (var item in departamentos)
-                cmd_departamento.Items.Add($"{item.Nombre}");
+            if (departamentos != null && departamentos.Count > 0)
+                await Task.Run(() =>
+                {
+                    foreach (var item in departamentos)
+                        Application.Current.Dispatcher.Invoke(new Action(() => { cmd_departamento.Items.Add(item); }));
+                });
+
+            usuarios = await Task.Run(() =>
+            {
+                return Usuario.FromDictionaryListToList(new DatabaseManager().FromDatabaseToDictionary("SELECT * FROM USUARIOS ORDER BY USUARIOS.USERNAME"));
+            });
+
+            if (usuarios != null && usuarios.Count > 0)
+                await Task.Run(() =>
+                {
+                    foreach (var item in usuarios)
+                        Application.Current.Dispatcher.Invoke(new Action(() => { cmd_username.Items.Add($"{item.Username}"); }));
+                });
 
             progressbar.Visibility = Visibility.Hidden;
         }
@@ -84,25 +109,69 @@ namespace SharedViews.Ventanas
             // GUARDAR
         }
 
-        private void cmd_serieprocesador_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private async void cmd_serieprocesador_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // SELECCION PROCESADOR
             if (cmd_serieprocesador.SelectedIndex != 0)
             {
                 if (cmd_serieprocesador.SelectedIndex > 0)
                 {
+                    txt_tdispositivo.Text= procesadores[cmd_serieprocesador.SelectedIndex - 1].TDispositivo;
                     txt_modelo.Text = procesadores[cmd_serieprocesador.SelectedIndex - 1].Modelo;
                     txt_marca.Text = procesadores[cmd_serieprocesador.SelectedIndex - 1].Marca;
                 }
-
             }
             else
             {
-                FormularioDispositivo form = new FormularioDispositivo();
+                FormularioDispositivo form = new FormularioDispositivo(FormularioDispositivo.PROCESADOR);
                 form.Owner = this;
                 form.ShowDialog();
 
                 cmd_serieprocesador.SelectedIndex = -1;
+
+                if (form.isInsertionComplete())
+                {
+                    progressbar.Visibility = Visibility.Visible;
+                    if (cmd_serieprocesador.HasItems)
+                        cmd_serieprocesador.Items.Clear();
+
+                    cmd_serieprocesador.Items.Add("(AÑADIR NUEVO)");
+
+                    procesadores = await Task.Run(() =>
+                    {
+                        return Dispositivo.FromDictionaryListToList(new DatabaseManager().FromDatabaseToDictionary("SELECT * FROM DISPOSITIVOS WHERE (DISPOSITIVOS.DISPOSITIVO LIKE \"PROCESADOR\" " +
+                            "OR DISPOSITIVOS.DISPOSITIVO LIKE \"LAPTOP\") " +
+                            "AND DISPOSITIVOS.SERIE NOT IN (SELECT DISTINCT PROCESADOR FROM CONJUNTO_EQUIPOS)"));
+                    });
+
+                    if (procesadores != null && procesadores.Count > 0)
+                        foreach (var item in procesadores)
+                            cmd_serieprocesador.Items.Add($"{item.Serie}");
+
+                    progressbar.Visibility = Visibility.Hidden;
+                }
+            }
+        }
+
+        private async void cmd_username_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // SELECCION USUARIO
+            if (cmd_username.SelectedIndex != 0)
+            {
+                if (cmd_username.SelectedIndex > 0)
+                {
+                    txt_usuariodirectorio.Text = usuarios[cmd_username.SelectedIndex - 1].NombreAD;
+                    txt_correo.Text = usuarios[cmd_username.SelectedIndex - 1].Correo;
+
+                    txt_perfilmigrado.Text = usuarios[cmd_username.SelectedIndex - 1].PerfilMigrado ? "SI" : "NO";
+                    txt_buzonmigrado.Text = usuarios[cmd_username.SelectedIndex - 1].BuzonMigrado ? "SI" : "NO";
+                }
+            }
+            else
+            {
+                FormularioUsuario form = new FormularioUsuario();
+                form.Owner = this;
+                form.ShowDialog();
             }
         }
     }

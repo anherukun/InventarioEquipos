@@ -1,5 +1,6 @@
 ﻿using SharedCode;
 using SharedCode.Classes;
+using SharedViews.Ventanas.InputWindows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,17 +22,22 @@ namespace SharedViews.Ventanas
     /// </summary>
     public partial class FormularioDispositivo : Window
     {
+        public const int PROCESADOR = 1;
+
         private List<string> tdispostivos = new List<string>();
         private List<string> marcas = new List<string>();
         private List<string> modelos = new List<string>();
 
         private Dispositivo dispositivo;
-
+        private int defaultDeviceSelection = 0;
         private bool isRedition = false;
+        private bool isinsertionComplete = false;
 
-        public FormularioDispositivo(object dispositivoOriginal = null)
+        public FormularioDispositivo(object dispositivoOriginal = null, int selectionMode = 0)
         {
             InitializeComponent();
+
+            defaultDeviceSelection = selectionMode;
 
             if (dispositivoOriginal != null)
             {
@@ -42,18 +48,46 @@ namespace SharedViews.Ventanas
             UpdateLayout();
         }
 
+        public FormularioDispositivo(int selectionMode = 0)
+        {
+            InitializeComponent();
+
+            defaultDeviceSelection = selectionMode;
+
+            UpdateLayout();
+        }
+
         private new async void UpdateLayout()
         {
             progressbar.Visibility = Visibility.Visible;
-
+            string sqldispositivos = "", sqlmarcas = "", sqlmodelos = "";
             if (isRedition)
             {
                 txtbox_serie.IsEnabled = false;
             }
 
+            if (defaultDeviceSelection == PROCESADOR)
+            {
+                sqldispositivos = "SELECT DISTINCT DISPOSITIVO FROM DISPOSITIVOS WHERE DISPOSITIVOS.DISPOSITIVO LIKE \"PROCESADOR\" OR DISPOSITIVOS.DISPOSITIVO LIKE \"LAPTOP\"";
+                sqlmarcas       = "SELECT DISTINCT MARCA FROM DISPOSITIVOS WHERE DISPOSITIVOS.DISPOSITIVO LIKE \"PROCESADOR\" OR DISPOSITIVOS.DISPOSITIVO LIKE \"LAPTOP\"";
+                sqlmodelos      = "SELECT DISTINCT MODELO FROM DISPOSITIVOS WHERE DISPOSITIVOS.DISPOSITIVO LIKE \"PROCESADOR\" OR DISPOSITIVOS.DISPOSITIVO LIKE \"LAPTOP\"";
+            }
+            else
+            {
+                sqldispositivos = "SELECT DISTINCT DISPOSITIVO FROM DISPOSITIVOS";
+                sqlmarcas       = "SELECT DISTINCT MARCA FROM DISPOSITIVOS";
+                sqlmodelos      = "SELECT DISTINCT MODELO FROM DISPOSITIVOS";
+            }
+
+
+
+            cmd_tdispositivo.Items.Add("(AÑADIR NUEVO)");
+            cmd_modelo.Items.Add("(AÑADIR NUEVO)");
+            cmd_marca.Items.Add("(AÑADIR NUEVO)");
+
             tdispostivos = await Task.Run(() =>
             {
-                List<Dictionary<string, object>> values = new DatabaseManager().FromDatabaseToDictionary("SELECT DISTINCT DISPOSITIVO FROM DISPOSITIVOS");
+                List<Dictionary<string, object>> values = new DatabaseManager().FromDatabaseToDictionary(sqldispositivos);
                 List<string> result = new List<string>();
 
                 if (values != null && values.Count > 0)
@@ -69,7 +103,7 @@ namespace SharedViews.Ventanas
 
             marcas = await Task.Run(() =>
             {
-                List<Dictionary<string, object>> values = new DatabaseManager().FromDatabaseToDictionary("SELECT DISTINCT MARCA FROM DISPOSITIVOS");
+                List<Dictionary<string, object>> values = new DatabaseManager().FromDatabaseToDictionary(sqlmarcas);
                 List<string> result = new List<string>();
 
                 if (values != null && values.Count > 0)
@@ -85,7 +119,7 @@ namespace SharedViews.Ventanas
 
             modelos = await Task.Run(() =>
             {
-                List<Dictionary<string, object>> values = new DatabaseManager().FromDatabaseToDictionary("SELECT DISTINCT MODELO FROM DISPOSITIVOS");
+                List<Dictionary<string, object>> values = new DatabaseManager().FromDatabaseToDictionary(sqlmodelos);
                 List<string> result = new List<string>();
 
                 if (values != null && values.Count > 0)
@@ -105,6 +139,7 @@ namespace SharedViews.Ventanas
 
         private bool FormIsComplete()
         {
+            // CHECA SI LOS CAMPOS OBLIGATORIOS YA FUERON CAPTURADOS
             return txtbox_serie.Text.Trim().Length > 0 && cmd_marca.Text.Trim().Length > 0 && cmd_tdispositivo.Text.Trim().Length > 0;
         }
 
@@ -120,6 +155,8 @@ namespace SharedViews.Ventanas
             };
         }
 
+        public bool isInsertionComplete() => isinsertionComplete;
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (FormIsComplete())
@@ -127,19 +164,93 @@ namespace SharedViews.Ventanas
                 string tdispositivo = "", marca = "", modelo = "";
 
                 if (cmd_tdispositivo.SelectedIndex > -1)
-                    tdispositivo = marcas[cmd_tdispositivo.SelectedIndex];
-                else
-                    tdispositivo = cmd_tdispositivo.Text;
+                    tdispositivo = tdispostivos[cmd_tdispositivo.SelectedIndex - 1];
 
                 if (cmd_marca.SelectedIndex > -1)
-                    marca = marcas[cmd_marca.SelectedIndex];
-                else
-                    marca = cmd_marca.Text;
+                    marca = marcas[cmd_marca.SelectedIndex - 1];
+
+                if (cmd_modelo.SelectedIndex > -1)
+                    modelo = modelos[cmd_modelo.SelectedIndex - 1];
 
                 dispositivo = BuildDevice(tdispositivo, marca, txtbox_serie.Text.Trim(), txtbox_inventario.Text.Trim(), modelo);
+
+                if (isinsertionComplete = new DatabaseManager().InsertData(Dispositivo.GetInsertSQL(dispositivo)))
+                    this.Close();
             }
             else
                 MessageBox.Show("Debe completar los campos obligatorios");
+        }
+
+        private void cmd_tdispositivo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cmd_tdispositivo.SelectedIndex == 0)
+            {
+                cmd_tdispositivo.SelectedIndex = -1;
+
+                TextInput input = new TextInput("Escribe el numero de modelo del dispositivo");
+                input.ShowDialog();
+
+                if (input.HasValue())
+                {
+                    tdispostivos.Add(input.RetriveValue().ToUpper());
+
+                    cmd_tdispositivo.Items.Clear();
+                    cmd_tdispositivo.Items.Add("(AÑADIR NUEVO)");
+
+                    foreach (var item in tdispostivos)
+                        cmd_tdispositivo.Items.Add(item);
+
+                    cmd_tdispositivo.SelectedIndex = cmd_tdispositivo.Items.Count - 1;
+                }
+            }
+        }
+
+        private void cmd_marca_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cmd_marca.SelectedIndex == 0)
+            {
+                cmd_marca.SelectedIndex = -1;
+
+                TextInput input = new TextInput("Escribe el numero de modelo del dispositivo");
+                input.ShowDialog();
+
+                if (input.HasValue())
+                {
+                    marcas.Add(input.RetriveValue().ToUpper());
+
+                    cmd_marca.Items.Clear();
+                    cmd_marca.Items.Add("(AÑADIR NUEVO)");
+
+                    foreach (var item in marcas)
+                        cmd_marca.Items.Add(item);
+
+                    cmd_marca.SelectedIndex = cmd_marca.Items.Count - 1;
+                }
+            }
+        }
+
+        private void cmd_modelo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (cmd_modelo.SelectedIndex == 0)
+            {
+                cmd_modelo.SelectedIndex = -1;
+
+                TextInput input = new TextInput("Escribe el numero de modelo del dispositivo");
+                input.ShowDialog();
+
+                if (input.HasValue())
+                {
+                    modelos.Add(input.RetriveValue().ToUpper());
+
+                    cmd_modelo.Items.Clear();
+                    cmd_modelo.Items.Add("(AÑADIR NUEVO)");
+
+                    foreach (var item in modelos)
+                        cmd_modelo.Items.Add(item);
+
+                    cmd_modelo.SelectedIndex = cmd_modelo.Items.Count - 1;
+                }
+            }
         }
     }
 }

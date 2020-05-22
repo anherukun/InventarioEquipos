@@ -1,11 +1,11 @@
-﻿<Window x:Class="SharedViews.Ventanas.FormularioDispositivo"
+﻿<Window x:Class="SharedViews.Ventanas.FormularioUsuario"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SharedViews.Ventanas"
         mc:Ignorable="d"
-        Title="FormularioDispositivo" Height="315" Width="425" Background="#F2F2F2" ResizeMode="NoResize" FontFamily="Montserrat" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
+        Title="FormularioDispositivo" Height="315" Width="440" Background="#F2F2F2" ResizeMode="NoResize" FontFamily="Montserrat" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
     <Grid>
         <StackPanel Margin="16" VerticalAlignment="Top">
             <TextBlock Text="NUEVO DISPOSITIVO"
@@ -14,41 +14,41 @@
             <TextBlock Text="INFORMACION GENERAL" Margin="0,8"
                            FontSize="16" FontWeight="DemiBold"/>
             <StackPanel Orientation="Horizontal" Margin="16,4">
-                <TextBlock Text="SERIE *" Width="120"
+                <TextBlock Text="USERNAME" Width="120"
                                FontWeight="DemiBold"/>
-                <TextBox x:Name="txtbox_serie" Text="" Width="131"/>
-                <Button Content="Auto generar" Margin="4,0,0,0"/>
+                <TextBox x:Name="txtbox_username" Width="94"/>
+                <Button Content="Comprobar con AD" Margin="4,0,0,0" Width="145" Click="Button_Click_1"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="16,4">
-                <TextBlock Text="DISPOSITIVO *" Width="120"
+                <TextBlock Text="NOMBRE EN AD" Width="120"
                                    FontWeight="DemiBold"
                                    VerticalAlignment="Center" TextWrapping="Wrap"/>
-                <ComboBox x:Name="cmd_tdispositivo" Width="218" 
-                                  VerticalAlignment="Center" SelectionChanged="cmd_tdispositivo_SelectionChanged"/>
+                <TextBlock x:Name="txt_nombread" Width="242" Text="SIN DATOS..."/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="16,4">
-                <TextBlock Text="MARCA *" Width="120"
+                <TextBlock Text="CORREO" Width="120"
                                FontWeight="DemiBold"
                            VerticalAlignment="Center"/>
-                <ComboBox x:Name="cmd_marca" Width="218" SelectionChanged="cmd_marca_SelectionChanged"/>
+                <TextBlock x:Name="txt_correo" Width="242" Text="SIN DATOS..."/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="16,4">
-                <TextBlock Text="MODELO" Width="120"
+                <TextBlock Text="MIGRACIONES" Width="120"
                                FontWeight="DemiBold"
                            VerticalAlignment="Center"/>
-                <ComboBox x:Name="cmd_modelo" Width="218" SelectionChanged="cmd_modelo_SelectionChanged"/>
+                <CheckBox x:Name="chkbox_migracioncorreo" Content="CORREO"/>
+                <CheckBox x:Name="chkbox_migracionperfil" Content="PERFIL" Margin="56,0,0,0"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="16,4">
-                <TextBlock Text="INVENTARIO" Width="120"
-                               FontWeight="DemiBold"/>
-                <TextBox x:Name="txtbox_inventario" Text="" Width="218"/>
+                <TextBlock Text="TRABAJADOR" Width="120"
+                               FontWeight="DemiBold"
+                           VerticalAlignment="Center"/>
+                <TextBox x:Name="txtbox_trabajador" Width="242" Text=""/>
             </StackPanel>
 
-            <Button Height="24" Margin="8" Width="90" HorizontalAlignment="Right" Click="Button_Click">
+            <Button Height="24" Margin="24,8" Width="90" HorizontalAlignment="Right" Click="Button_Click">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,2">
                     <Image Source="/SharedViews;component/Imgs/tick.png"/>
-                    <TextBlock VerticalAlignment="center" Text="Aceptar"
-                                       Margin="4,0"/>
+                    <TextBlock VerticalAlignment="center" Text="Aceptar" Margin="4,0"/>
                 </StackPanel>
             </Button>
         </StackPanel>

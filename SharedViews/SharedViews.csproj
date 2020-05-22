@@ -37,6 +37,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -70,6 +72,12 @@
     <Compile Include="Ventanas\FormularioDispositivo.xaml.cs">
       <DependentUpon>FormularioDispositivo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Ventanas\FormularioUsuario.xaml.cs">
+      <DependentUpon>FormularioUsuario.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Ventanas\InputWindows\TextInput.xaml.cs">
+      <DependentUpon>TextInput.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Ventanas\VisorConjuntoEquipo.xaml.cs">
       <DependentUpon>VisorConjuntoEquipo.xaml</DependentUpon>
     </Compile>
@@ -102,6 +110,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Ventanas\FormularioDispositivo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ventanas\FormularioUsuario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ventanas\InputWindows\TextInput.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

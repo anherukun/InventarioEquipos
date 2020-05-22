@@ -15,6 +15,12 @@ namespace SharedCode.Classes
         public bool BuzonMigrado { get; set; }
         public string Contrasena { get; set; }
 
+        public static string GetInsertSQL(Usuario u)
+        {
+            return $"INSERT INTO USUARIOS (USERNAME, NOMBREAD, TRABAJADOR, CATEGORIA, CORREO, PERFILMIGRADO, BUZONMIGRADO, CONTRASENA)" +
+                $"VALUES ({u.Username}, \"{u.NombreAD}\", \"{u.Trabajador}\". \"{u.Categoria}\", \"{u.Correo}\", {u.PerfilMigrado}, {u.BuzonMigrado}, \"{u.Contrasena}\")";
+        }
+
         /// <summary>
         /// Transforma una <see cref="List{T}"/> de elementos de un <see cref="Dictionary{TKey, TValue}"/> en una <see cref="List{T}"/> de objetos de la clase <see cref="Usuario"/>
         /// </summary>

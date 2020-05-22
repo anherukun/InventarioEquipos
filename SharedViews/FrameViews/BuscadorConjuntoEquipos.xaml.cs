@@ -33,7 +33,6 @@ namespace SharedViews.FrameViews
         }
         private List<ConjuntoEquipos> equipos = new List<ConjuntoEquipos>();
         private List<string> departamentos = new List<string>();
-        private List<string> marcas = new List<string>();
 
         private ProgressBar progressBar;
 
