@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.DirectoryServices;
 using System.DirectoryServices.AccountManagement;
 using System.Text;
 
@@ -12,7 +13,7 @@ namespace SharedCode
             // RESUELVE EL NOMBRE COMPLETO DEL USUARIO CON SU USERNAME DEL DOMINIO
             try
             {
-                System.DirectoryServices.DirectoryEntry ADEntry = new System.DirectoryServices.DirectoryEntry($"WinNT://PEMEX/{username}");
+                DirectoryEntry ADEntry = new DirectoryEntry($"WinNT://PEMEX/{username}");
                 return ADEntry.Properties["FullName"].Value.ToString();
             }
             catch (Exception)
@@ -23,14 +24,10 @@ namespace SharedCode
 
         static public string GetADAlias(string username)
         {
-            var x = new PrincipalContext(ContextType.Domain, "PEMEX.PMX.COM");
-            var user = UserPrincipal.FindByIdentity(x, username);
-            Console.WriteLine(user.EmailAddress);
-
             // RESUELVE EL ALIAS DEL USUARIO CON SU USERNAME DEL DOMINIO
             try
             {
-                System.DirectoryServices.DirectoryEntry ADEntry = new System.DirectoryServices.DirectoryEntry($"WinNT://PEMEX/{username}");
+                DirectoryEntry ADEntry = new DirectoryEntry($"WinNT://PEMEX/{username}");
                 return ADEntry.Properties["netbiosname"][0].ToString();
             }
             catch (Exception)
@@ -39,7 +36,21 @@ namespace SharedCode
             }
         }
 
-        static public string GetDomainMail(string username) => $"{GetADAlias(username)}@pemex.com";
+        static public string GetDomainMail(string username)
+        {
+            DirectoryEntry entry = new DirectoryEntry("LDAP://PEMEX");
+
+            // get a DirectorySearcher object
+            DirectorySearcher search = new DirectorySearcher(entry);
+
+            // specify the search filter
+            search.Filter = $"(&(objectClass=user)(anr={username}))";
+
+            // perform the search
+            SearchResult result = search.FindOne();
+
+            return result.GetDirectoryEntry().InvokeGet("mail").ToString();
+        }
     }
 }
 
