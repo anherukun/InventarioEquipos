@@ -30,10 +30,41 @@ namespace SharedViews.Ventanas
 
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            txt_nombread.Text = ActiveDirectoryManager.GetADUserFullname(txtbox_username.Text.Trim());
-            txt_correo.Text = ActiveDirectoryManager.GetDomainMail(txtbox_username.Text.Trim());
+            //txt_nombread.Text = ActiveDirectoryManager.GetADUserFullname(txtbox_username.Text.Trim());
+
+            try
+            {
+                await Task.Run(() =>
+                {
+                    Application.Current.Dispatcher.Invoke(new Action(() =>
+                    {
+                        txt_correo.Text = ActiveDirectoryManager.GetUserMail(ActiveDirectoryManager.SearchInActiveDirectory(txtbox_username.Text.Trim())).ToLower();
+                    }));
+                });
+
+                await Task.Run(() =>
+                {
+                    Application.Current.Dispatcher.Invoke(new Action(() =>
+                    {
+                        txt_nombread.Text = ActiveDirectoryManager.GetUserFullname(ActiveDirectoryManager.SearchInActiveDirectory(txtbox_username.Text.Trim())).ToUpper();
+                    }));
+                });
+
+                await Task.Run(() =>
+                {
+                    Application.Current.Dispatcher.Invoke(new Action(() =>
+                    {
+                        txtbox_trabajador.Text = ActiveDirectoryManager.GetUserFullname(ActiveDirectoryManager.SearchInActiveDirectory(txtbox_username.Text.Trim())).ToUpper();
+                    }));
+                });
+            }
+            catch (Exception ex)
+            {
+                ApplicationManager.ExceptionHandler(ex);
+            }
+            
         }
     }
 }

@@ -8,48 +8,37 @@ namespace SharedCode
 {
     class ActiveDirectoryManager
     {
-        static public string GetADUserFullname(string username)
-        {
-            // RESUELVE EL NOMBRE COMPLETO DEL USUARIO CON SU USERNAME DEL DOMINIO
-            try
-            {
-                DirectoryEntry ADEntry = new DirectoryEntry($"WinNT://PEMEX/{username}");
-                return ADEntry.Properties["FullName"].Value.ToString();
-            }
-            catch (Exception)
-            {
-                return "";
-            }
-        }
+        static public string GetUserFullname(SearchResult result) => result != null && result.GetDirectoryEntry().InvokeGet("displayName").ToString() != null ? 
+            result.GetDirectoryEntry().InvokeGet("displayName").ToString() : "Sin resultados";
 
-        static public string GetADAlias(string username)
-        {
-            // RESUELVE EL ALIAS DEL USUARIO CON SU USERNAME DEL DOMINIO
-            try
-            {
-                DirectoryEntry ADEntry = new DirectoryEntry($"WinNT://PEMEX/{username}");
-                return ADEntry.Properties["netbiosname"][0].ToString();
-            }
-            catch (Exception)
-            {
-                return "";
-            }
-        }
+        static public string GetUserAlias(SearchResult result) => result != null && result.GetDirectoryEntry().InvokeGet("mail").ToString() != null ? 
+            result.GetDirectoryEntry().InvokeGet("mail").ToString().Replace("@pemex.com", "") : "Sin resultados";
 
-        static public string GetDomainMail(string username)
+        static public string GetUserMail(SearchResult result) => result != null && result.GetDirectoryEntry().InvokeGet("mail").ToString() != null ? 
+            result.GetDirectoryEntry().InvokeGet("mail").ToString() : "Sin resultados";
+
+        static public object[] GetUserMemberOf(SearchResult result) => result != null && result.GetDirectoryEntry().InvokeGet("memberOf") != null ?
+            (object[])result.GetDirectoryEntry().InvokeGet("memberOf") : null;
+
+        static public SearchResult SearchInActiveDirectory(string username)
         {
             DirectoryEntry entry = new DirectoryEntry("LDAP://PEMEX");
-
-            // get a DirectorySearcher object
             DirectorySearcher search = new DirectorySearcher(entry);
-
-            // specify the search filter
+            
             search.Filter = $"(&(objectClass=user)(anr={username}))";
 
-            // perform the search
             SearchResult result = search.FindOne();
 
-            return result.GetDirectoryEntry().InvokeGet("mail").ToString();
+            // if (result != null)
+            //     foreach (var item in result.GetDirectoryEntry().Properties.PropertyNames)
+            //     {
+            //         Console.WriteLine($"ACTIVE DIRECTORY RESULT: {item.ToString()},\t{result.GetDirectoryEntry().InvokeGet(item.ToString()).ToString()}");
+            //     }
+            // 
+            // if (result.GetDirectoryEntry().InvokeGet("memberOf") != null)
+            //     Console.WriteLine(result.GetDirectoryEntry().InvokeGet("memberOf").GetType());
+
+            return result;
         }
     }
 }
