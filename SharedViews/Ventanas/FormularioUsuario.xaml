@@ -7,45 +7,79 @@
         mc:Ignorable="d"
         Title="FormularioDispositivo" Height="315" Width="440" Background="#F2F2F2" ResizeMode="NoResize" FontFamily="Montserrat" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
     <Grid>
-        <StackPanel Margin="16" VerticalAlignment="Top">
+        <StackPanel Margin="16,8" VerticalAlignment="Top">
             <TextBlock Text="NUEVO DISPOSITIVO"
                        FontSize="24" FontWeight="Bold"/>
 
             <TextBlock Text="INFORMACION GENERAL" Margin="0,8"
                            FontSize="16" FontWeight="DemiBold"/>
-            <StackPanel Orientation="Horizontal" Margin="16,4">
-                <TextBlock Text="USERNAME" Width="120"
-                               FontWeight="DemiBold"/>
-                <TextBox x:Name="txtbox_username" Width="94"/>
-                <Button Content="Comprobar con AD" Margin="4,0,0,0" Width="145" Click="Button_Click_1"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="16,4">
-                <TextBlock Text="NOMBRE EN AD" Width="120"
-                                   FontWeight="DemiBold"
-                                   VerticalAlignment="Center" TextWrapping="Wrap"/>
-                <TextBlock x:Name="txt_nombread" Width="242" Text="SIN DATOS..."/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="16,4">
-                <TextBlock Text="CORREO" Width="120"
-                               FontWeight="DemiBold"
-                           VerticalAlignment="Center"/>
-                <TextBlock x:Name="txt_correo" Width="242" Text="SIN DATOS..."/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="16,4">
-                <TextBlock Text="MIGRACIONES" Width="120"
-                               FontWeight="DemiBold"
-                           VerticalAlignment="Center"/>
-                <CheckBox x:Name="chkbox_migracioncorreo" Content="CORREO"/>
-                <CheckBox x:Name="chkbox_migracionperfil" Content="PERFIL" Margin="56,0,0,0"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Margin="16,4">
-                <TextBlock Text="TRABAJADOR" Width="120"
-                               FontWeight="DemiBold"
-                           VerticalAlignment="Center"/>
-                <TextBox x:Name="txtbox_trabajador" Width="242" Text=""/>
-            </StackPanel>
 
-            <Button Height="24" Margin="24,8" Width="90" HorizontalAlignment="Right" Click="Button_Click">
+            <Grid Margin="16,4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="USERNAME *" Grid.Row="0" Grid.Column="0"
+                               FontWeight="DemiBold" VerticalAlignment="Center"/>
+                <Grid Grid.Row="0" Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="95"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="txtbox_username" Grid.Column="0"/>
+                    <Button Content="Comprobar con AD" Margin="4,0,0,0" Grid.Column="1" Click="Button_Click_1"/>
+                </Grid>
+
+                <TextBlock Text="NOMBRE EN AD" Grid.Row="1" Grid.Column="0" Margin="0,4"
+                           FontWeight="DemiBold"
+                           VerticalAlignment="Center" TextWrapping="Wrap"/>
+                <TextBlock x:Name="txt_nombread" Grid.Row="1" Grid.Column="1"
+                           Text="SIN DATOS..." VerticalAlignment="Center"/>
+
+                <TextBlock Text="CORREO" Grid.Row="2" Grid.Column="0" Margin="0,4"
+                           FontWeight="DemiBold"
+                           VerticalAlignment="Center"/>
+                <TextBlock x:Name="txt_correo" Grid.Row="2" Grid.Column="1"
+                           Text="SIN DATOS..." VerticalAlignment="Center"/>
+
+                <TextBlock Text="MIGRACIONES" Grid.Row="3" Grid.Column="0" Margin="0,4"
+                           FontWeight="DemiBold"
+                           VerticalAlignment="Center"/>
+                <CheckBox x:Name="chkbox_migracioncorreo" Content="CORREO" Grid.Row="3" Grid.Column="1"
+                          VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <CheckBox x:Name="chkbox_migracionperfil" Content="PERFIL" Grid.Row="3" Grid.Column="1"
+                          VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+                <TextBlock Text="TRABAJADOR" Grid.Row="4" Grid.Column="0" Margin="0,4"
+                           FontWeight="DemiBold"
+                           VerticalAlignment="Center"/>
+                <TextBox x:Name="txtbox_trabajador" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center"/>
+
+                <TextBlock Text="CATEGORIA" Grid.Row="5" Grid.Column="0" Margin="0,4"
+                               FontWeight="DemiBold"
+                           VerticalAlignment="Center"/>
+                <TextBox x:Name="txtbox_categria" Grid.Row="5" Grid.Column="1"
+                         VerticalAlignment="Center"/>
+
+                <TextBlock Text="CONTRASEÑA" Grid.Row="6" Grid.Column="0" Margin="0,4"
+                           FontWeight="DemiBold"
+                           VerticalAlignment="Center"/>
+                <TextBox x:Name="txtbox_contrasena" Grid.Row="6" Grid.Column="1"
+                         VerticalAlignment="Center"/>
+            </Grid>
+
+            <Button Height="24" Margin="16,4" Width="90" HorizontalAlignment="Right" Click="Button_Click">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,2">
                     <Image Source="/SharedViews;component/Imgs/tick.png"/>
                     <TextBlock VerticalAlignment="center" Text="Aceptar" Margin="4,0"/>

@@ -1,4 +1,5 @@
 ﻿using SharedCode;
+using SharedCode.Classes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace SharedViews.Ventanas
     /// </summary>
     public partial class FormularioUsuario : Window
     {
+        Usuario usuario = new Usuario();
         public FormularioUsuario()
         {
             InitializeComponent();
@@ -27,13 +29,35 @@ namespace SharedViews.Ventanas
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            // ACEPTAR
+            if (txt_correo.Text != "Sin resultados" || txt_nombread.Text != "Sin resultados")
+            {
+                usuario = new Usuario()
+                {
+                    Username = int.Parse(txtbox_username.Text.Trim()),
+                    NombreAD = txt_nombread.Text.Trim().ToUpper(),
+                    Correo = txt_correo.Text.Trim(),
+                    Trabajador = txtbox_trabajador.Text.Trim() != "" ? txtbox_trabajador.Text.Trim().ToUpper() : "",
+                    Categoria = txtbox_categria.Text.Trim() != "" ? txtbox_categria.Text.Trim().ToUpper() : "",
+                    BuzonMigrado = chkbox_migracioncorreo.IsChecked.Value,
+                    PerfilMigrado = chkbox_migracionperfil.IsChecked.Value,
+                    Contrasena = txtbox_contrasena.Text.Trim() != "" ? ApplicationManager.EncodeToBase64(txtbox_contrasena.Text.Trim()) : ""
+                };
 
+                if (new DatabaseManager().InsertData(Usuario.GetInsertSQL(usuario)))
+                    MessageBox.Show("Usuario agregado correctamente");
+                else
+                    MessageBox.Show("No se pudo agregar el usuario");
+            }
+            else
+            {
+                MessageBox.Show("Comprueba el usuario antes de guardarlo");
+            }
         }
 
         private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            //txt_nombread.Text = ActiveDirectoryManager.GetADUserFullname(txtbox_username.Text.Trim());
-
+            // COMPROBACION CON DIRECTORIO ACTIVO
             try
             {
                 await Task.Run(() =>

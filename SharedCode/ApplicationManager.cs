@@ -9,7 +9,7 @@ namespace SharedCode
     class ApplicationManager
     {
         /// <summary>Ejecuta el recolector de basura para liberar memoria que ya no se usa</summary>
-        static public void InitGB()
+        public static void InitGB()
         {
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -25,7 +25,7 @@ namespace SharedCode
         ///     /// Do something...
         /// }
         /// ...</code></example>
-        static public bool FileExistOnAppdata(string filename) => File.Exists($"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/Inventarios/{filename}") ? true : false;
+        public static bool FileExistOnAppdata(string filename) => File.Exists($"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/Inventarios/{filename}") ? true : false;
         // Es lo mismo que escribir esto:
         // { 
         //     if (File.Exists($"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/ControlAcceso/{filename}"))
@@ -39,7 +39,7 @@ namespace SharedCode
         /// <param name="bytes">Objeto serializado en un arreglo de bytes</param>
         /// <param name="filename">Nombre del archivo con extension</param>
         /// <returns><see cref="true"/> Si el archivo pudo escribirse correctamente. <see cref="false"/> Si ocurrio alguna excepcion, mostrara un mensaje en pantalla con el error</returns>
-        static public bool WriteBinaryFileOnAppdata(byte[] bytes, string filename)
+        public static bool WriteBinaryFileOnAppdata(byte[] bytes, string filename)
         {
             // Se comprueba de que exista la rita donde se escribira el archivo, cuando no la encuentre, se encargara de crearla
             if (!Directory.Exists($"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\Inventarios\\{filename}"))
@@ -69,7 +69,7 @@ namespace SharedCode
         /// <summary>Lee un los bytes de un archivo binario ubicado en la ruta preestablecida: <c>C:\Users\%USERNAME%\AppData\Local\ControlAcceso</c></summary>
         /// <param name="filename">Nombre del archivo con extension</param>
         /// <returns><see cref="object"/> Serializado en un arreglo de bytes</returns>
-        static public byte[] ReadBinaryFileOnAppdata(string filename)
+        public static byte[] ReadBinaryFileOnAppdata(string filename)
         {
             try
             {
@@ -84,7 +84,7 @@ namespace SharedCode
             }
         }
 
-        static public void ExceptionHandler(Exception e)
+        public static void ExceptionHandler(Exception e)
         {
             try
             {
@@ -144,6 +144,18 @@ namespace SharedCode
                 ApplicationManager.ExceptionHandler(ex);
                 return null;
             }
+        }
+
+        public static string EncodeToBase64(string value)
+        {
+            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(value);
+            return System.Convert.ToBase64String(bytes);
+        }
+
+        public static string DecodeFromBase64(string value)
+        {
+            byte[] bytes = System.Convert.FromBase64String(value);
+            return System.Text.Encoding.UTF8.GetString(bytes);
         }
     }
 }

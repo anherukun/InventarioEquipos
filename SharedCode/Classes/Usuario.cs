@@ -18,7 +18,7 @@ namespace SharedCode.Classes
         public static string GetInsertSQL(Usuario u)
         {
             return $"INSERT INTO USUARIOS (USERNAME, NOMBREAD, TRABAJADOR, CATEGORIA, CORREO, PERFILMIGRADO, BUZONMIGRADO, CONTRASENA)" +
-                $"VALUES ({u.Username}, \"{u.NombreAD}\", \"{u.Trabajador}\". \"{u.Categoria}\", \"{u.Correo}\", {u.PerfilMigrado}, {u.BuzonMigrado}, \"{u.Contrasena}\")";
+                $"VALUES ({u.Username}, \"{u.NombreAD}\", \"{u.Trabajador}\", \"{u.Categoria}\", \"{u.Correo}\", {u.PerfilMigrado}, {u.BuzonMigrado}, \"{u.Contrasena}\")";
         }
 
         /// <summary>
