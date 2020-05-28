@@ -77,6 +77,9 @@
     <Compile Include="Ventanas\FormularioUsuario.xaml.cs">
       <DependentUpon>FormularioUsuario.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Ventanas\InputWindows\SelectorDispositivo.xaml.cs">
+      <DependentUpon>SelectorDispositivo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Ventanas\InputWindows\TextInput.xaml.cs">
       <DependentUpon>TextInput.xaml</DependentUpon>
     </Compile>
@@ -116,6 +119,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Ventanas\FormularioUsuario.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Ventanas\InputWindows\SelectorDispositivo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

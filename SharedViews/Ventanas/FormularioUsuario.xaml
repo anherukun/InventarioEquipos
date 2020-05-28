@@ -8,7 +8,7 @@
         Title="FormularioDispositivo" Height="315" Width="440" Background="#F2F2F2" ResizeMode="NoResize" FontFamily="Montserrat" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
     <Grid>
         <StackPanel Margin="16,8" VerticalAlignment="Top">
-            <TextBlock Text="NUEVO DISPOSITIVO"
+            <TextBlock Text="NUEVO USUARIO"
                        FontSize="24" FontWeight="Bold"/>
 
             <TextBlock Text="INFORMACION GENERAL" Margin="0,8"
@@ -45,13 +45,13 @@
                            FontWeight="DemiBold"
                            VerticalAlignment="Center" TextWrapping="Wrap"/>
                 <TextBlock x:Name="txt_nombread" Grid.Row="1" Grid.Column="1"
-                           Text="SIN DATOS..." VerticalAlignment="Center"/>
+                           Text="Sin resultados" VerticalAlignment="Center"/>
 
                 <TextBlock Text="CORREO" Grid.Row="2" Grid.Column="0" Margin="0,4"
                            FontWeight="DemiBold"
                            VerticalAlignment="Center"/>
                 <TextBlock x:Name="txt_correo" Grid.Row="2" Grid.Column="1"
-                           Text="SIN DATOS..." VerticalAlignment="Center"/>
+                           Text="Sin resultados" VerticalAlignment="Center"/>
 
                 <TextBlock Text="MIGRACIONES" Grid.Row="3" Grid.Column="0" Margin="0,4"
                            FontWeight="DemiBold"

@@ -1,6 +1,7 @@
 ﻿using SharedCode;
 using SharedCode.Classes;
 using SharedCode.Classes.Misc;
+using SharedViews.Ventanas.InputWindows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,10 @@ namespace SharedViews.Ventanas
         private List<Dispositivo> procesadores = new List<Dispositivo>();
         private List<Usuario> usuarios = new List<Usuario>();
         private List<string> departamentos = new List<string>();
+
+        private List<Dispositivo> dispositivos = new List<Dispositivo>();
+        private List<Dispositivo> dispositivosnuevos = new List<Dispositivo>();
+        private List<Dispositivo> dispositivoseliminados = new List<Dispositivo>();
 
         public FormularioConjuntoEquipo()
         {
@@ -91,12 +96,21 @@ namespace SharedViews.Ventanas
                         Application.Current.Dispatcher.Invoke(new Action(() => { cmd_username.Items.Add($"{item.Username}"); }));
                 });
 
+            // await Task.Run(() =>
+            // {
+            // 
+            //     Dispositivo.FromDictionaryListToList(new DatabaseManager().FromDatabaseToDictionary($"SELECT * FROM REL_CONJUNTOE_DISPOSITIVO WHERE REL_CONJUNTOE_DISPOSITIVO.PROCESADOR LIKE \"{dis}\""));
+            // });
+
             progressbar.Visibility = Visibility.Hidden;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             // AGREGAR DISPOSITIVO
+            SelectorDispositivo input = new SelectorDispositivo();
+            input.Owner = this;
+            input.ShowDialog();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

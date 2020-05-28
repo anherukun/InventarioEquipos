@@ -6,6 +6,27 @@ namespace SharedCode.Classes
 {
     class Usuario
     {
+        public class Permiso
+        {
+            public string Nombre { get; set; }
+
+            public static List<Permiso> FromArrayToList(object[] array)
+            {
+                List<Permiso> permisos = new List<Permiso>();
+
+                if (array != null)
+                {
+                    foreach (var item in array)
+                        permisos.Add(new Permiso() { Nombre = (string)item });
+                }
+                else
+                {
+                    permisos.Add(new Permiso() { Nombre = "Sin permisos registrados" });
+                }
+
+                return permisos;
+            }
+        }
         public int Username { get; set; }
         public string NombreAD { get; set; }
         public string Trabajador { get; set; }
@@ -14,6 +35,7 @@ namespace SharedCode.Classes
         public bool PerfilMigrado { get; set; }
         public bool BuzonMigrado { get; set; }
         public string Contrasena { get; set; }
+        public List<Permiso> Permisos { get; set; }
 
         public static string GetInsertSQL(Usuario u)
         {

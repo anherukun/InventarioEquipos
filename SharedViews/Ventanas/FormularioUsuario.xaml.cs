@@ -2,6 +2,7 @@
 using SharedCode.Classes;
 using System;
 using System.Collections.Generic;
+using System.DirectoryServices;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace SharedViews.Ventanas
     {
         private Usuario usuario = new Usuario();
         private bool isinsetrionComplete = false;
+        private SearchResult user;
         public FormularioUsuario()
         {
             InitializeComponent();
@@ -33,7 +35,7 @@ namespace SharedViews.Ventanas
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             // ACEPTAR
-            if (txt_correo.Text != "Sin resultados" || txt_nombread.Text != "Sin resultados")
+            if (user != null)
             {
                 usuario = new Usuario()
                 {
@@ -66,35 +68,33 @@ namespace SharedViews.Ventanas
             // COMPROBACION CON DIRECTORIO ACTIVO
             try
             {
-                await Task.Run(() =>
+                user = await Task.Run(() =>
                 {
-                    Application.Current.Dispatcher.Invoke(new Action(() =>
-                    {
-                        txt_correo.Text = ActiveDirectoryManager.GetUserMail(ActiveDirectoryManager.SearchInActiveDirectory(txtbox_username.Text.Trim())).ToLower();
-                    }));
+                    string username = "";
+                    Application.Current.Dispatcher.Invoke(new Action(() => { username = txtbox_username.Text.Trim(); }));
+
+                    return ActiveDirectoryManager.SearchInActiveDirectory(username);
                 });
 
-                await Task.Run(() =>
+                if (user != null)
                 {
-                    Application.Current.Dispatcher.Invoke(new Action(() =>
-                    {
-                        txt_nombread.Text = ActiveDirectoryManager.GetUserFullname(ActiveDirectoryManager.SearchInActiveDirectory(txtbox_username.Text.Trim())).ToUpper();
-                    }));
-                });
+                    txt_correo.Text = ActiveDirectoryManager.GetUserMail(user).ToLower();
+                    txt_nombread.Text = ActiveDirectoryManager.GetUserFullname(user).ToUpper();
+                    txtbox_trabajador.Text = ActiveDirectoryManager.GetUserFullname(user).ToUpper();
+                }
+                else
+                {
+                    txt_correo.Text = "";
+                    txt_nombread.Text = "";
+                    txtbox_trabajador.Text = "";
 
-                await Task.Run(() =>
-                {
-                    Application.Current.Dispatcher.Invoke(new Action(() =>
-                    {
-                        txtbox_trabajador.Text = ActiveDirectoryManager.GetUserFullname(ActiveDirectoryManager.SearchInActiveDirectory(txtbox_username.Text.Trim())).ToUpper();
-                    }));
-                });
+                    MessageBox.Show("No se pudo encontrar este usuario");
+                }
             }
             catch (Exception ex)
             {
                 ApplicationManager.ExceptionHandler(ex);
             }
-            
         }
     }
 }
