@@ -75,7 +75,7 @@
                 <TextBlock Text="CONTRASEÑA" Grid.Row="6" Grid.Column="0" Margin="0,4"
                            FontWeight="DemiBold"
                            VerticalAlignment="Center"/>
-                <TextBox x:Name="txtbox_contrasena" Grid.Row="6" Grid.Column="1"
+                <PasswordBox x:Name="txtbox_contrasena" Grid.Row="6" Grid.Column="1"
                          VerticalAlignment="Center"/>
             </Grid>
 

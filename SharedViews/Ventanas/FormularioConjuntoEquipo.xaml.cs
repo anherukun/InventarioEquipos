@@ -32,7 +32,7 @@ namespace SharedViews.Ventanas
             UpdateCombos();
         }
 
-        private new async void UpdateCombos()
+        private async void UpdateCombos()
         {
             progressbar.Visibility = Visibility.Visible;
 
@@ -107,6 +107,7 @@ namespace SharedViews.Ventanas
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
             // GUARDAR
+
         }
 
         private async void cmd_serieprocesador_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -172,6 +173,28 @@ namespace SharedViews.Ventanas
                 FormularioUsuario form = new FormularioUsuario();
                 form.Owner = this;
                 form.ShowDialog();
+                if (form.IsInsertionComplete())
+                {
+                    progressbar.Visibility = Visibility.Visible;
+                    if (cmd_username.HasItems)
+                        cmd_username.Items.Clear();
+
+                    cmd_username.Items.Add("(AÑADIR NUEVO)");
+
+                    usuarios = await Task.Run(() =>
+                    {
+                        return Usuario.FromDictionaryListToList(new DatabaseManager().FromDatabaseToDictionary("SELECT * FROM USUARIOS ORDER BY USUARIOS.USERNAME"));
+                    });
+
+                    if (usuarios != null && usuarios.Count > 0)
+                        await Task.Run(() =>
+                        {
+                            foreach (var item in usuarios)
+                                Application.Current.Dispatcher.Invoke(new Action(() => { cmd_username.Items.Add($"{item.Username}"); }));
+                        });
+
+                    progressbar.Visibility = Visibility.Hidden;
+                }    
             }
         }
     }

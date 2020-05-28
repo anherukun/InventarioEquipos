@@ -21,11 +21,14 @@ namespace SharedViews.Ventanas
     /// </summary>
     public partial class FormularioUsuario : Window
     {
-        Usuario usuario = new Usuario();
+        private Usuario usuario = new Usuario();
+        private bool isinsetrionComplete = false;
         public FormularioUsuario()
         {
             InitializeComponent();
         }
+
+        public bool IsInsertionComplete() => isinsetrionComplete;
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -41,11 +44,14 @@ namespace SharedViews.Ventanas
                     Categoria = txtbox_categria.Text.Trim() != "" ? txtbox_categria.Text.Trim().ToUpper() : "",
                     BuzonMigrado = chkbox_migracioncorreo.IsChecked.Value,
                     PerfilMigrado = chkbox_migracionperfil.IsChecked.Value,
-                    Contrasena = txtbox_contrasena.Text.Trim() != "" ? ApplicationManager.EncodeToBase64(txtbox_contrasena.Text.Trim()) : ""
+                    Contrasena = txtbox_contrasena.Password.Trim() != "" ? ApplicationManager.EncodeToBase64(txtbox_contrasena.Password.Trim()) : ""
                 };
 
-                if (new DatabaseManager().InsertData(Usuario.GetInsertSQL(usuario)))
+                if (isinsetrionComplete = new DatabaseManager().InsertData(Usuario.GetInsertSQL(usuario)))
+                {
                     MessageBox.Show("Usuario agregado correctamente");
+                    this.Close();
+                }                    
                 else
                     MessageBox.Show("No se pudo agregar el usuario");
             }
