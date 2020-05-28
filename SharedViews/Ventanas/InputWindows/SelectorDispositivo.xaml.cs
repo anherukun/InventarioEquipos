@@ -21,7 +21,8 @@ namespace SharedViews.Ventanas.InputWindows
     /// </summary>
     public partial class SelectorDispositivo : Window
     {
-        List<Dispositivo> Dispositivos = new List<Dispositivo>();
+        private List<Dispositivo> Dispositivos = new List<Dispositivo>();
+        private Dispositivo dispositivoSeleccionado;
 
         public SelectorDispositivo()
         {
@@ -45,9 +46,17 @@ namespace SharedViews.Ventanas.InputWindows
                 cmd_serie.Items.Add(item.Serie);
         }
 
+        public object RetriveSelection() => dispositivoSeleccionado;
+
+        public bool IsSelectedOption() => dispositivoSeleccionado != null ? true : false;
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            if (cmd_serie.SelectedIndex > 0)
+            {
+                dispositivoSeleccionado = Dispositivos[cmd_serie.SelectedIndex - 1];
+                this.Close();
+            }
         }
 
         private void cmd_serie_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -59,6 +68,10 @@ namespace SharedViews.Ventanas.InputWindows
                 txt_dispositivo.Text = Dispositivos[cmd_serie.SelectedIndex - 1].TDispositivo.Trim().ToUpper();
                 txt_marca.Text = Dispositivos[cmd_serie.SelectedIndex - 1].Marca.Trim().ToUpper();
                 txt_modelo.Text = Dispositivos[cmd_serie.SelectedIndex - 1].Modelo != null ? Dispositivos[cmd_serie.SelectedIndex - 1].Modelo.Trim().ToUpper() : "SIN DATOS...";
+            }
+            else
+            {
+                cmd_serie.SelectedIndex = -1;
             }
         }
     }

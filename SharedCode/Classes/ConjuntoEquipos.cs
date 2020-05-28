@@ -15,6 +15,12 @@ namespace SharedCode.Classes
         public int Usuario { get; set; }
         public int Arquitectura { get; set; }
 
+        public static string GetInserSQL(ConjuntoEquipos conjunto)
+        {
+            return $"INSERT INTO CONJUNTO_EQUIPOS (PROCESADOR, HOSTNAME, DEPTO, UBICACION_FISICA, USUARIO, ARQUITECTURA)" +
+                $"VALUES (\"{conjunto.Procesador}\", \"{conjunto.Hostname}\", \"{conjunto.Departamento}\", \"{conjunto.UbicacionFisica}\", {conjunto.Usuario}, {conjunto.Arquitectura})";
+        }
+
         /// <summary>
         /// Transforma un <see cref="Dictionary{TKey, TValue}"/> a un objeto de clase <see cref="Usuario"/>
         /// </summary>

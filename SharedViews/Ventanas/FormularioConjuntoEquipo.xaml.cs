@@ -23,6 +23,8 @@ namespace SharedViews.Ventanas
     /// </summary>
     public partial class FormularioConjuntoEquipo : Window
     {
+        private ConjuntoEquipos conjunto = new ConjuntoEquipos();
+
         private List<Dispositivo> procesadores = new List<Dispositivo>();
         private List<Usuario> usuarios = new List<Usuario>();
         private List<string> departamentos = new List<string>();
@@ -111,17 +113,104 @@ namespace SharedViews.Ventanas
             SelectorDispositivo input = new SelectorDispositivo();
             input.Owner = this;
             input.ShowDialog();
+
+            if (input.IsSelectedOption())
+            {
+                dispositivos.Add(input.RetriveSelection() as Dispositivo);
+                dispositivosnuevos.Add(input.RetriveSelection() as Dispositivo);
+
+                lst_dispositivos.ItemsSource = dispositivos;
+                lst_dispositivos.Items.Refresh();
+            }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             // QUITAR DISPOSITIVO
+
+            // COMPRUEBA SI ES DE LOS DISPOSITIVOS QUE ESTA ALMACENADOS EN LA BASE DE DATOS
+            if (!dispositivos.Contains(lst_dispositivos.SelectedItem as Dispositivo))
+                Console.WriteLine("Application: This element is not in the database");
+            else
+            {
+                Console.WriteLine("Application: This element is in the database, will be deleted");
+
+                if (dispositivos.Remove(lst_dispositivos.SelectedItem as Dispositivo))
+                    dispositivoseliminados.Add(lst_dispositivos.SelectedItem as Dispositivo);
+            }
+
+            // COMPRUEBA SI ES DE LOS DISPOSITIVOS RECIEN AGREGADOS
+            if (dispositivosnuevos.Contains(lst_dispositivos.SelectedItem as Dispositivo))
+            {
+                Console.WriteLine("Application: This element is not in the database, will be removed from the new devices list");
+                dispositivosnuevos.Remove(lst_dispositivos.SelectedItem as Dispositivo);
+            }
+            
+
+            lst_dispositivos.Items.Refresh();
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private async void Button_Click_3(object sender, RoutedEventArgs e)
         {
+            bool insertionComplete = false;
             // GUARDAR
+            progressbar.Visibility = Visibility.Visible;
 
+            conjunto = new ConjuntoEquipos()
+            {
+                Procesador = procesadores[cmd_serieprocesador.SelectedIndex - 1].Serie,
+                Arquitectura = int.Parse(txtbox_arquitectura.Text.Trim()),
+                Departamento = departamentos[cmd_departamento.SelectedIndex],
+                Hostname = txtbox_hostname.Text.Trim().ToUpper(),
+                UbicacionFisica = txtbox_ubicacionfisica.Text.Trim().ToUpper(),
+                Usuario = usuarios[cmd_username.SelectedIndex - 1].Username
+            };
+
+            await Task.Run(() =>
+            {
+                new DatabaseManager().InsertData(ConjuntoEquipos.GetInserSQL(conjunto));
+            });
+
+            if (dispositivosnuevos.Count > 0)
+            {
+                await Task.Run(() =>
+                {
+                    // INSERTA EN LA TABLA RELACION_CONJUNTO_DISPISITIVOS
+                    foreach (var item in dispositivosnuevos)
+                    {
+                        new DatabaseManager().InsertData($"INSERT INTO REL_CONJUNTOE_DISPOSITIVO (PROCESADOR, DISPOSITIVO) VALUES (\"{conjunto.Procesador}\", \"{item.Serie}\")");
+                    }
+                });
+            }
+            else
+                progressbar.Visibility = Visibility.Hidden;
+
+            if (dispositivoseliminados.Count > 0)
+            {
+                progressbar.Visibility = Visibility.Visible;
+
+                await Task.Run(() =>
+                {
+                    // ELIMINA EN LA TABLA RELACION_CONJUNTO_DISPISITIVOS
+                    foreach (var item in dispositivosnuevos)
+                    {
+                        new DatabaseManager().InsertData($"DELETE * FROM REL_CONJUNTOE_DISPOSITIVO WHERE REL_CONJUNTOE_DISPOSITIVO.PROCESADOR LIKE \"{conjunto.Procesador}\" " +
+                            $"AND REL_CONJUNTOE_DISPOSITIVO.DISPOSITIVO LIKE \"{item.Serie}\"");
+                    }
+                });
+
+                insertionComplete = true;
+            }
+            else
+            {
+                progressbar.Visibility = Visibility.Hidden;
+                insertionComplete = true;
+            }
+
+            if (insertionComplete)
+            {
+                this.Close();
+            }
         }
 
         private async void cmd_serieprocesador_SelectionChanged(object sender, SelectionChangedEventArgs e)

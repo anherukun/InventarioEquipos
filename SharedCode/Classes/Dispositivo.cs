@@ -18,6 +18,11 @@ namespace SharedCode.Classes
                 $"VALUES (\"{dispositivo.Serie}\", \"{dispositivo.Modelo}\", \"{dispositivo.TDispositivo}\", \"{dispositivo.Marca}\", \"{dispositivo.Inventario}\")";
         }
 
+        public static string GetDeleteSQL(Dispositivo dispositivo)
+        {
+            return $"DELETE * FROM DISPOSITIVOS WHERE DISPOSITIVOS.SERIE LIKE \"{dispositivo.Serie}\"";
+        }
+
         /// <summary>
         /// Transforma una <see cref="List{T}"/> de elementos de un <see cref="Dictionary{TKey, TValue}"/> en una <see cref="List{T}"/> de objetos de la clase <see cref="Dispositivo"/>
         /// </summary>
