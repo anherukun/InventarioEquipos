@@ -24,6 +24,9 @@ namespace SharedViews.Ventanas
         private ConjuntoEquipos ConjuntoEquipo;
         private Dispositivo Procesador;
         private Usuario Usuario;
+
+        private List<Dispositivo> Dispositivos = new List<Dispositivo>();
+
         public VisorConjuntoEquipo(Object equipo)
         {
             InitializeComponent();
@@ -44,6 +47,14 @@ namespace SharedViews.Ventanas
             {
                 return Usuario.FromDictionarySingle(new DatabaseManager().FromDatabaseToSingleDictionary($"SELECT * FROM USUARIOS WHERE USUARIOS.USERNAME LIKE {ConjuntoEquipo.Usuario}"));
             });
+
+            Dispositivos = await Task.Run(() =>
+            {
+                return Dispositivo.FromDictionaryListToList(new DatabaseManager().FromDatabaseToDictionary($"SELECT * FROM DISPOSITIVOS " +
+                    $"WHERE DISPOSITIVOS.SERIE " +
+                    $"IN (SELECT DISTINCT DISPOSITIVO FROM REL_CONJUNTOE_DISPOSITIVO WHERE REL_CONJUNTOE_DISPOSITIVO.PROCESADOR LIKE \"{ConjuntoEquipo.Procesador}\")"));
+            });
+
             UpdateLayout();
         }
 
@@ -66,6 +77,8 @@ namespace SharedViews.Ventanas
                 txt_perfilmigrado.Text = Usuario.PerfilMigrado ? "SI" : "NO";
                 txt_buzonmigrado.Text = Usuario.BuzonMigrado ? "SI" : "NO";
             }
+
+            lst_dispositivos.ItemsSource = Dispositivos;
 
             progressbar.Visibility = Visibility.Hidden;
         }
