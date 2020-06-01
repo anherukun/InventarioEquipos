@@ -148,7 +148,11 @@ namespace SharedViews.FrameViews
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
+            // EDITAR CONJUNTO
+            FormularioConjuntoEquipo form = new FormularioConjuntoEquipo(equipos[lst_registros.SelectedIndex]);
+            form.Show();
 
+            UpdateLayout();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -156,6 +160,8 @@ namespace SharedViews.FrameViews
             // ABRIR FORMULARIOCONJUNTOEQUIPO
             FormularioConjuntoEquipo form = new FormularioConjuntoEquipo();
             form.Show();
+
+            UpdateLayout();
         }
     }
 }
