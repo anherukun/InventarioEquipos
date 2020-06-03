@@ -112,7 +112,7 @@ namespace SharedViews.Ventanas
             progressbar.Visibility = Visibility.Hidden;
         }
 
-        private async void UpdateCombosWithEditorMode()
+        private void UpdateCombosWithEditorMode()
         {
             progressbar.Visibility = Visibility.Visible;
 
@@ -128,42 +128,38 @@ namespace SharedViews.Ventanas
             cmd_serieprocesador.IsEnabled = false;
             cmd_username.Items.Add("(AÑADIR NUEVO)");
 
-            await Task.Run(async () =>
+
+            List<Dictionary<string, object>> values1 = new DatabaseManager().FromDatabaseToDictionary("SELECT DISTINCT DEPTO FROM CONJUNTO_EQUIPOS");
+            
+            if (values1 != null && values1.Count > 0)
+                foreach (var item in values1)
+                    departamentos.Add((string)item["DEPTO"]);
+            
+            procesadores.Add(Dispositivo.FromDictionarySingle(new DatabaseManager().FromDatabaseToSingleDictionary($"SELECT * FROM DISPOSITIVOS WHERE DISPOSITIVOS.SERIE LIKE \"{conjunto.Procesador}\"")));
+            
+            if (departamentos != null && departamentos.Count > 0)
+                foreach (var item in departamentos)
+                    Application.Current.Dispatcher.Invoke(new Action(() => { cmd_departamento.Items.Add(item); }));
+            
+            usuarios = Usuario.FromDictionaryListToList(new DatabaseManager().FromDatabaseToDictionary("SELECT * FROM USUARIOS ORDER BY USUARIOS.USERNAME"));
+            
+            if (usuarios != null && usuarios.Count > 0)
+                foreach (var item in usuarios)
+                    Application.Current.Dispatcher.Invoke(new Action(() => { cmd_username.Items.Add($"{item.Username}"); }));
+            
+            Application.Current.Dispatcher.Invoke(new Action(() =>
             {
-                List<Dictionary<string, object>> values1 = new DatabaseManager().FromDatabaseToDictionary("SELECT DISTINCT DEPTO FROM CONJUNTO_EQUIPOS");
-
-                if (values1 != null && values1.Count > 0)
-                    foreach (var item in values1)
-                        departamentos.Add((string)item["DEPTO"]);
-
-                if (departamentos != null && departamentos.Count > 0)
-                    foreach (var item in departamentos)
-                        Application.Current.Dispatcher.Invoke(new Action(() => { cmd_departamento.Items.Add(item); }));
-
-                usuarios = Usuario.FromDictionaryListToList(new DatabaseManager().FromDatabaseToDictionary("SELECT * FROM USUARIOS ORDER BY USUARIOS.USERNAME"));
-
-                if (usuarios != null && usuarios.Count > 0)
-                    await Task.Run(() =>
-                    {
-                        foreach (var item in usuarios)
-                            Application.Current.Dispatcher.Invoke(new Action(() => { cmd_username.Items.Add($"{item.Username}"); }));
-                    });
-
-                dispositivos = Dispositivo.FromDictionaryListToList(new DatabaseManager().FromDatabaseToDictionary($"SELECT * FROM DISPOSITIVOS " +
-                    $"WHERE DISPOSITIVOS.SERIE " +
-                    $"IN (SELECT DISTINCT DISPOSITIVO FROM REL_CONJUNTOE_DISPOSITIVO WHERE REL_CONJUNTOE_DISPOSITIVO.PROCESADOR LIKE \"{conjunto.Procesador}\")"));
-
-                Application.Current.Dispatcher.Invoke(new Action(() =>
-                {
-                    RefreshWithCurrentValues();
-                    progressbar.Visibility = Visibility.Hidden;
-                }));
-            });
+                RefreshWithExistentValues();
+                progressbar.Visibility = Visibility.Hidden;
+            }));
         }
 
-        private void RefreshWithCurrentValues()
+        private void RefreshWithExistentValues()
         {
             txtbox_hostname.Text = conjunto.Hostname;
+            txtbox_arquitectura.Text = $"{conjunto.Arquitectura}";
+            txtbox_ubicacionfisica.Text = conjunto.UbicacionFisica;
+
             cmd_serieprocesador.Items.Add(conjunto.Procesador);
             cmd_serieprocesador.SelectedIndex = 0;
 
@@ -174,6 +170,10 @@ namespace SharedViews.Ventanas
             for (int i = 0; i < usuarios.Count; i++)
                 if (usuarios[i].Username == conjunto.Usuario)
                     cmd_username.SelectedIndex = i + 1;
+
+            dispositivos = Dispositivo.FromDictionaryListToList(new DatabaseManager().FromDatabaseToDictionary($"SELECT * FROM DISPOSITIVOS " +
+                    $"WHERE DISPOSITIVOS.SERIE " +
+                    $"IN (SELECT DISTINCT DISPOSITIVO FROM REL_CONJUNTOE_DISPOSITIVO WHERE REL_CONJUNTOE_DISPOSITIVO.PROCESADOR LIKE \"{conjunto.Procesador}\")"));
 
             lst_dispositivos.ItemsSource = dispositivos;
         }
@@ -187,6 +187,9 @@ namespace SharedViews.Ventanas
 
             if (input.IsSelectedOption())
             {
+                if (dispositivos == null)
+                    dispositivos = new List<Dispositivo>();
+
                 dispositivos.Add(input.RetriveSelection() as Dispositivo);
                 dispositivosnuevos.Add(input.RetriveSelection() as Dispositivo);
 
@@ -227,20 +230,39 @@ namespace SharedViews.Ventanas
             // GUARDAR
             progressbar.Visibility = Visibility.Visible;
 
-            conjunto = new ConjuntoEquipos()
+            // SI ES UN CONJUNTO NUEVO
+            if (editorMode != true)
             {
-                Procesador = procesadores[cmd_serieprocesador.SelectedIndex - 1].Serie,
-                Arquitectura = int.Parse(txtbox_arquitectura.Text.Trim()),
-                Departamento = departamentos[cmd_departamento.SelectedIndex],
-                Hostname = txtbox_hostname.Text.Trim().ToUpper(),
-                UbicacionFisica = txtbox_ubicacionfisica.Text.Trim().ToUpper(),
-                Usuario = usuarios[cmd_username.SelectedIndex - 1].Username
-            };
+                conjunto = new ConjuntoEquipos()
+                {
+                    Procesador = procesadores[cmd_serieprocesador.SelectedIndex - 1].Serie,
+                    Arquitectura = int.Parse(txtbox_arquitectura.Text.Trim()),
+                    Departamento = departamentos[cmd_departamento.SelectedIndex],
+                    Hostname = txtbox_hostname.Text.Trim().ToUpper(),
+                    UbicacionFisica = txtbox_ubicacionfisica.Text.Trim().ToUpper(),
+                    Usuario = usuarios[cmd_username.SelectedIndex - 1].Username
+                };
 
-            await Task.Run(() =>
+                await Task.Run(() =>
+                {
+                    new DatabaseManager().InsertData(ConjuntoEquipos.GetInserSQL(conjunto));
+                });
+            }
+            // SI ES UNA MODIFICACION DE UN CONJUNTO
+            else
             {
-                new DatabaseManager().InsertData(ConjuntoEquipos.GetInserSQL(conjunto));
-            });
+                conjunto.Arquitectura = int.Parse(txtbox_arquitectura.Text.Trim());
+                conjunto.Departamento = departamentos[cmd_departamento.SelectedIndex];
+                conjunto.UbicacionFisica = txtbox_ubicacionfisica.Text.Trim().ToUpper();
+                conjunto.Hostname = txtbox_hostname.Text.Trim().ToUpper();
+                conjunto.Usuario = usuarios[cmd_username.SelectedIndex - 1].Username;
+
+                await Task.Run(() =>
+                {
+                    new DatabaseManager().InsertData(ConjuntoEquipos.GetUpdateSQL(conjunto));
+                });
+            }
+            
 
             if (dispositivosnuevos.Count > 0)
             {
@@ -263,7 +285,7 @@ namespace SharedViews.Ventanas
                 await Task.Run(() =>
                 {
                     // ELIMINA EN LA TABLA RELACION_CONJUNTO_DISPISITIVOS
-                    foreach (var item in dispositivosnuevos)
+                    foreach (var item in dispositivoseliminados)
                     {
                         new DatabaseManager().InsertData($"DELETE * FROM REL_CONJUNTOE_DISPOSITIVO WHERE REL_CONJUNTOE_DISPOSITIVO.PROCESADOR LIKE \"{conjunto.Procesador}\" " +
                             $"AND REL_CONJUNTOE_DISPOSITIVO.DISPOSITIVO LIKE \"{item.Serie}\"");

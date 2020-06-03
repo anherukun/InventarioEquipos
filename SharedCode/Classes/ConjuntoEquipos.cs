@@ -20,6 +20,16 @@ namespace SharedCode.Classes
             return $"INSERT INTO CONJUNTO_EQUIPOS (PROCESADOR, HOSTNAME, DEPTO, UBICACION_FISICA, USUARIO, ARQUITECTURA)" +
                 $"VALUES (\"{conjunto.Procesador}\", \"{conjunto.Hostname}\", \"{conjunto.Departamento}\", \"{conjunto.UbicacionFisica}\", {conjunto.Usuario}, {conjunto.Arquitectura})";
         }
+        public static string GetUpdateSQL(ConjuntoEquipos conjunto)
+        {
+            return $"UPDATE CONJUNTO_EQUIPOS SET " +
+                $"HOSTNAME = \"{conjunto.Hostname}\", " +
+                $"DEPTO = \"{conjunto.Departamento}\", " +
+                $"UBICACION_FISICA = \"{conjunto.UbicacionFisica}\", " +
+                $"USUARIO = {conjunto.Usuario}, " +
+                $"ARQUITECTURA = {conjunto.Arquitectura} " +
+                $"WHERE CONJUNTO_EQUIPOS.PROCESADOR LIKE \"{conjunto.Procesador}\"";
+        }
 
         /// <summary>
         /// Transforma un <see cref="Dictionary{TKey, TValue}"/> a un objeto de clase <see cref="Usuario"/>
