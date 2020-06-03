@@ -50,7 +50,7 @@ namespace SharedCode.Classes
         /// <returns><see cref="List{T}"/> de objetos de la case <see cref="Usuario"/></returns>
         public static List<Usuario> FromDictionaryListToList(List<Dictionary<string, object>> keyValues)
         {
-            if (keyValues.Count > 0)
+            if (keyValues != null && keyValues.Count > 0)
             {
                 List<Usuario> ls = new List<Usuario>();
                 foreach (Dictionary<string, object> item in keyValues)

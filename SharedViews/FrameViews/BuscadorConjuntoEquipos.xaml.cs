@@ -101,10 +101,10 @@ namespace SharedViews.FrameViews
 
         private string CrearSQL(int departamentosIndex = 0,  string serie = "", string hostname = "")
         {
-            string sql = "SELECT * FROM CONJUNTO_EQUIPOS WHERE {param-1} AND {param-2} AND {param-3} ORDER BY CONJUNTO_EQUIPOS.DEPTO ASC";
+            string sql = "SELECT * FROM CONJUNTO_EQUIPOS WHERE {param-1} AND {param-2} AND {param-3} ORDER BY CONJUNTO_EQUIPOS.DEPTO ASC, CONJUNTO_EQUIPOS.UBICACION_FISICA ASC";
 
             if (departamentosIndex == 0 && hostname.Trim().Length == 0 && serie.Trim().Length == 0)
-                sql = "SELECT * FROM CONJUNTO_EQUIPOS ORDER BY CONJUNTO_EQUIPOS.DEPTO ASC";
+                sql = "SELECT * FROM CONJUNTO_EQUIPOS ORDER BY CONJUNTO_EQUIPOS.DEPTO ASC, CONJUNTO_EQUIPOS.UBICACION_FISICA ASC";
             else
             {
                 if (departamentosIndex != 0)
