@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="125"/>
             <RowDefinition/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Margin="16,16,16,8" VerticalAlignment="Top">
@@ -86,6 +87,10 @@
                 </ListView.ItemContainerStyle>
             </ListView>
         </Grid>
-        
+
+        <Grid Grid.Row="2">
+            <Button Content="Registrar dispositivo" Width="150" Margin="16,0"
+                    HorizontalAlignment="Right" VerticalAlignment="Center" Click="Button_Click_1"/>
+        </Grid>
     </Grid>
 </Page>

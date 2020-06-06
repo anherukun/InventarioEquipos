@@ -1,5 +1,6 @@
 ﻿using SharedCode;
 using SharedCode.Classes;
+using SharedViews.Ventanas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -154,7 +155,24 @@ namespace SharedViews.FrameViews
         {
             // MENU CONTEXTUAL - EDITAR
             if (lst_registros.SelectedIndex > -1)
-                MessageBox.Show($"Editar {dispositivos[lst_registros.SelectedIndex].Serie}");
+            {
+                FormularioDispositivo form = new FormularioDispositivo(dispositivos[lst_registros.SelectedIndex], FormularioDispositivo.ALLDEVICES);
+                form.ShowDialog();
+
+                if (form.isInsertionComplete())
+                {
+                    string sql = CrearSQL(cmd_dispositivo.SelectedIndex, cmd_marca.SelectedIndex, txtbox_serie.Text.Trim().ToUpper());
+                    IniciarBusqueda(sql);
+                }
+            }
+                // MessageBox.Show($"Editar {dispositivos[lst_registros.SelectedIndex].Serie}");
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            // REGISTRAR DISPOSITIVO
+            FormularioDispositivo form = new FormularioDispositivo(FormularioDispositivo.ALLDEVICES);
+            form.ShowDialog();
         }
     }
 }

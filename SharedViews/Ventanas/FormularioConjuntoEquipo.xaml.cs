@@ -34,6 +34,7 @@ namespace SharedViews.Ventanas
         private List<Dispositivo> dispositivoseliminados = new List<Dispositivo>();
 
         private bool editorMode;
+        private bool insertionComplete;
 
         public FormularioConjuntoEquipo()
         {
@@ -49,6 +50,8 @@ namespace SharedViews.Ventanas
 
             UpdateCombosWithEditorMode();
         }
+
+        public bool IsInsertionComplete() => insertionComplete;
 
         private async void UpdateCombos()
         {
@@ -226,7 +229,7 @@ namespace SharedViews.Ventanas
 
         private async void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            bool insertionComplete = false;
+            insertionComplete = false;
             // GUARDAR
             progressbar.Visibility = Visibility.Visible;
 
@@ -240,7 +243,7 @@ namespace SharedViews.Ventanas
                     Departamento = departamentos[cmd_departamento.SelectedIndex],
                     Hostname = txtbox_hostname.Text.Trim().ToUpper(),
                     UbicacionFisica = txtbox_ubicacionfisica.Text.Trim().ToUpper(),
-                    Usuario = usuarios[cmd_username.SelectedIndex - 1].Username
+                    Usuario = cmd_username.SelectedIndex > 0 ? usuarios[cmd_username.SelectedIndex - 1].Username : 0
                 };
 
                 await Task.Run(() =>
@@ -255,7 +258,7 @@ namespace SharedViews.Ventanas
                 conjunto.Departamento = departamentos[cmd_departamento.SelectedIndex];
                 conjunto.UbicacionFisica = txtbox_ubicacionfisica.Text.Trim().ToUpper();
                 conjunto.Hostname = txtbox_hostname.Text.Trim().ToUpper();
-                conjunto.Usuario = usuarios[cmd_username.SelectedIndex - 1].Username;
+                conjunto.Usuario = cmd_username.SelectedIndex > 0 ? usuarios[cmd_username.SelectedIndex - 1].Username : 0;
 
                 await Task.Run(() =>
                 {
@@ -365,6 +368,14 @@ namespace SharedViews.Ventanas
         private async void cmd_username_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // SELECCION USUARIO
+            if (cmd_username.SelectedIndex == -1)
+            {
+                txt_usuariodirectorio.Text = "";
+                txt_correo.Text = "";
+
+                txt_perfilmigrado.Text = "";
+                txt_buzonmigrado.Text = "";
+            }
             if (cmd_username.SelectedIndex != 0)
             {
                 if (cmd_username.SelectedIndex > 0)

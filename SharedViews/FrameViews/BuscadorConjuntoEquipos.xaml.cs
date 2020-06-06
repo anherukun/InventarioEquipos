@@ -49,6 +49,9 @@ namespace SharedViews.FrameViews
             progressBar.Visibility = Visibility.Visible;
             progressBar.IsIndeterminate = true;
 
+            if (cmd_departamento.HasItems)
+                cmd_departamento.Items.Clear();
+
             departamentos = await Task.Run(() =>
             {
                 List<Dictionary<string, object>> values1 = new DatabaseManager().FromDatabaseToDictionary("SELECT DISTINCT DEPTO FROM CONJUNTO_EQUIPOS");
@@ -150,18 +153,20 @@ namespace SharedViews.FrameViews
         {
             // EDITAR CONJUNTO
             FormularioConjuntoEquipo form = new FormularioConjuntoEquipo(equipos[lst_registros.SelectedIndex]);
-            form.Show();
+            form.ShowDialog();
 
-            UpdateLayout();
+            if (form.IsInsertionComplete())
+                UpdateLayout();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             // ABRIR FORMULARIOCONJUNTOEQUIPO
             FormularioConjuntoEquipo form = new FormularioConjuntoEquipo();
-            form.Show();
+            form.ShowDialog();
 
-            UpdateLayout();
+            if (form.IsInsertionComplete())
+                UpdateLayout();
         }
     }
 }

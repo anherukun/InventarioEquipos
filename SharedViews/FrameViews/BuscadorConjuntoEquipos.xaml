@@ -92,6 +92,5 @@
                 <Button Content="Registrar equipo" Width="150" Click="Button_Click_1"/>
             </StackPanel>
         </Grid>
-
     </Grid>
 </Page>

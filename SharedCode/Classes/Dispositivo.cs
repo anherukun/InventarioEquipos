@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
 
 namespace SharedCode.Classes
 {
@@ -21,6 +22,16 @@ namespace SharedCode.Classes
         public static string GetDeleteSQL(Dispositivo dispositivo)
         {
             return $"DELETE * FROM DISPOSITIVOS WHERE DISPOSITIVOS.SERIE LIKE \"{dispositivo.Serie}\"";
+        }
+
+        public static string GetUpdateSQL(Dispositivo dispositivo)
+        {
+            return $"UPDATE DISPOSITIVOS SET " +
+                $"DISPOSITIVO = \"{dispositivo.TDispositivo}\", " +
+                $"MARCA = \"{dispositivo.Marca}\", " +
+                $"MODELO = \"{dispositivo.Modelo}\", " +
+                $"INVENTARIO = \"{dispositivo.Inventario}\" " +
+                $"WHERE DISPOSITIVOS.SERIE LIKE \"{dispositivo.Serie}\"";
         }
 
         /// <summary>
