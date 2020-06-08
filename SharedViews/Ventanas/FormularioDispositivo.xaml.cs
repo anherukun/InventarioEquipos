@@ -287,5 +287,10 @@ namespace SharedViews.Ventanas
                 }
             }
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            txtbox_serie.Text = ApplicationManager.GenerateGUID();
+        }
     }
 }

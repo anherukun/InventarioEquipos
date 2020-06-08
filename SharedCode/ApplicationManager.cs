@@ -157,6 +157,8 @@ namespace SharedCode
             byte[] bytes = System.Convert.FromBase64String(value);
             return System.Text.Encoding.UTF8.GetString(bytes);
         }
+
+        public static string GenerateGUID() => Guid.NewGuid().ToString().ToUpper();
     }
 }
 

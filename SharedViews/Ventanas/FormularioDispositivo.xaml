@@ -17,7 +17,7 @@
                 <TextBlock Text="SERIE *" Width="120"
                                FontWeight="DemiBold"/>
                 <TextBox x:Name="txtbox_serie" Text="" Width="131"/>
-                <Button Content="Auto generar" Margin="4,0,0,0"/>
+                <Button Content="Auto generar" Margin="4,0,0,0" Click="Button_Click_1"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="16,4">
                 <TextBlock Text="DISPOSITIVO *" Width="120"
