@@ -63,7 +63,7 @@
         </StackPanel>
 
         <Grid Grid.Row="1" Margin="16,8">
-            <ListView x:Name="lst_registros">
+            <ListView x:Name="lst_registros" Margin="0,0,0,18">
                 <ListView.View>
                     <GridView AllowsColumnReorder="False">
                         <GridViewColumn DisplayMemberBinding="{Binding Departamento}" Header="DEPARTAMENTO"/>
@@ -74,7 +74,7 @@
                 </ListView.View>
                 <ListView.Resources>
                     <ContextMenu x:Key="ItemContextMenu">
-                        <MenuItem Header="Abrir" Command="{Binding Path=DataContext.MoreInfo, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Background="WhiteSmoke" Click="MenuItem_Click" />
+                        <MenuItem Header="Ver detalles" Command="{Binding Path=DataContext.MoreInfo, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Background="WhiteSmoke" Click="MenuItem_Click" />
                         <MenuItem Header="Editar" Command="{Binding Path=DataContext.MoreInfo, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Background="WhiteSmoke" Click="MenuItem_Click_1" />
                     </ContextMenu>
                 </ListView.Resources>
@@ -85,6 +85,8 @@
                     </Style>
                 </ListView.ItemContainerStyle>
             </ListView>
+            <TextBlock Text="* Para editar o ver mas detalles pulsa click derecho sobre un elemento" VerticalAlignment="Bottom"
+                       FontWeight="DemiBold"/>
         </Grid>
 
         <Grid Grid.Row="2">

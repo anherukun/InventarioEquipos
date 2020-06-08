@@ -65,6 +65,9 @@
     <Compile Include="FrameViews\BuscadorDispositivos.xaml.cs">
       <DependentUpon>BuscadorDispositivos.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FrameViews\BuscadorUsuarios.xaml.cs">
+      <DependentUpon>BuscadorUsuarios.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UControls\CatalogControl.xaml.cs">
       <DependentUpon>CatalogControl.xaml</DependentUpon>
     </Compile>
@@ -91,6 +94,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="FrameViews\BuscadorDispositivos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FrameViews\BuscadorUsuarios.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
