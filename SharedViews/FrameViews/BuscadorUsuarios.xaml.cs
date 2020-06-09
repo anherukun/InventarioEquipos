@@ -24,5 +24,31 @@ namespace SharedViews.FrameViews
         {
             InitializeComponent();
         }
+
+        private void CrearSQL(string value)
+        {
+
+        }
+
+        private void IniciarBusqueda(string sql)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            // BUSCAR
+
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -5,10 +5,70 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:SharedViews.FrameViews"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
-      Title="BuscadorUsuarios">
+      d:DesignHeight="400" d:DesignWidth="800"
+      Title="BuscadorUsuarios" Background="#F2F2F2">
 
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="87"/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="16,16,16,8" VerticalAlignment="Top">
+            <TextBlock Text="Filtrar" FontWeight="SemiBold"
+                       FontSize="20"/>
+
+            <Grid Margin="24, 8, 0, 8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="BUSCAR" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="8, 0"/>
+                    <TextBox x:Name="txtbox_buscar" Grid.Column="1"/>
+                </Grid>
+
+                <Grid Grid.Column="1">
+                    <Button Content="Actualizar" HorizontalAlignment="Right" Width="150" Click="Button_Click"/>
+                </Grid>
+            </Grid>
+        </StackPanel>
+
+        <Grid Grid.Row="1" Margin="16,8">
+            <ListView x:Name="lst_registros" Margin="0,0,0,18">
+                <ListView.View>
+                    <GridView AllowsColumnReorder="False">
+                        <GridViewColumn DisplayMemberBinding="{Binding TDispositivo}" Header="USERNAME"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Marca}" Header="NOMBRE EN DIRECTORIO ACTIVO"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Serie}" Header="TRABAJADOR"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Modelo}" Header="CORREO"/>
+                    </GridView>
+                </ListView.View>
+                <ListView.Resources>
+                    <ContextMenu x:Key="ItemContextMenu">
+                        <MenuItem Header="Ver detalles" Command="{Binding Path=DataContext.MoreInfo, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Background="WhiteSmoke" Click="MenuItem_Click" />
+                        <MenuItem Header="Editar" Command="{Binding Path=DataContext.MoreInfo, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Background="WhiteSmoke" Click="MenuItem_Click_1" />
+                    </ContextMenu>
+                </ListView.Resources>
+
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}" >
+                        <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+            </ListView>
+            <TextBlock Text="* Para editar o ver mas detalles pulsa click derecho sobre un elemento" VerticalAlignment="Bottom"
+                       FontWeight="DemiBold"/>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Button Content="Registrar usuario" Width="150" Margin="16,0"
+                    HorizontalAlignment="Right" VerticalAlignment="Center" Click="Button_Click_1"/>
+        </Grid>
     </Grid>
 </Page>
