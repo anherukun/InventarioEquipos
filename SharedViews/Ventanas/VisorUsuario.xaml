@@ -1,0 +1,77 @@
+﻿<Window x:Class="SharedViews.Ventanas.VisorUsuario"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SharedViews.Ventanas"
+        mc:Ignorable="d"
+        Title="Detalles del usuario" Height="500" Width="425" Background="#F2F2F2" ResizeMode="CanMinimize" FontFamily="Montserrat">
+    <Grid>
+        <ProgressBar x:Name="progressbar" Height="5" IsIndeterminate="True" VerticalAlignment="Top"/>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
+            <StackPanel Orientation="Vertical">
+
+                <StackPanel Margin="16, 16, 0, 16">
+                    <TextBlock Text="DETALLES"
+                       FontSize="24" FontWeight="Bold"/>
+
+                    <TextBlock Text="INFORMACION GENERAL" Margin="0,8"
+                           FontSize="16" FontWeight="DemiBold"/>
+                    <StackPanel Orientation="Horizontal" Margin="16,4,0,0">
+                        <TextBlock Text="USERNAME" Width="120"
+                               FontWeight="DemiBold"/>
+                        <TextBlock x:Name="txt_username" Text="SIN DATOS..."/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="16,4,0,0">
+                        <TextBlock Text="NOMBRE EN D. ACTIVO" Width="120"
+                               FontWeight="DemiBold" TextWrapping="Wrap"/>
+                        <TextBlock x:Name="txt_nombread" Text="SIN DATOS..."/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="16,4,0,0">
+                        <TextBlock Text="TRABAJADOR" Width="120"
+                               FontWeight="DemiBold"/>
+                        <TextBlock x:Name="txt_trabajador" Text="SIN DATOS..."/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="16,4,0,0">
+                        <TextBlock Text="CATEGORIA" Width="120"
+                               FontWeight="DemiBold"/>
+                        <TextBlock x:Name="txt_categoria" Text="SIN DATOS..."/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="16,4,0,0">
+                        <TextBlock Text="CORREO" Width="120"
+                               FontWeight="DemiBold"/>
+                        <TextBlock x:Name="txt_correo" Text="SIN DATOS..." TextWrapping="Wrap"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="16,4,0,0">
+                        <TextBlock Text="PERFIL MIGRADO" Width="120"
+                               FontWeight="DemiBold"/>
+                        <TextBlock x:Name="txt_perfilmigrado" Text="SIN DATOS..." Width="218" TextWrapping="Wrap"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="16,4,0,0">
+                        <TextBlock Text="BUZON MIGRADO" Width="120"
+                               FontWeight="DemiBold"/>
+                        <TextBlock x:Name="txt_buzonmigrado" Text="SIN DATOS..." Width="218" TextWrapping="Wrap"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="16,4,0,0">
+                        <TextBlock Text="CONTRASEÑA" Width="120"
+                               FontWeight="DemiBold"/>
+                        <Grid Width="245" Margin="0,0,8,0">
+                            <TextBlock x:Name="txt_contrasena" Text="SIN DATOS..." TextWrapping="Wrap"/>
+                            <Button Content="Ver contraseña" HorizontalAlignment="Right" Width="100"/>
+                        </Grid>
+                    </StackPanel>
+
+                    <TextBlock Text="PERMISOS DEL USUARIO" Margin="0,8"
+                           FontSize="16" FontWeight="DemiBold"/>
+                    <ListView x:Name="lst_dispositivos" Height="120" Margin="8,0,8,0">
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="False">
+                                <GridViewColumn DisplayMemberBinding="{Binding Permiso}" Header="NOMBRE DEL PERMISO"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>

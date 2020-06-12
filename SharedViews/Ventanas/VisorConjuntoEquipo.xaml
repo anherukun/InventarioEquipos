@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SharedViews.Ventanas"
         mc:Ignorable="d"
-        Title="VisorConjuntoEquipo" Height="600" Width="425" Background="#F2F2F2" ResizeMode="CanMinimize" FontFamily="Montserrat">
+        Title="Detalles del conjunto" Height="600" Width="425" Background="#F2F2F2" ResizeMode="CanMinimize" FontFamily="Montserrat">
     <Grid>
         <ProgressBar x:Name="progressbar" Height="5" IsIndeterminate="True" VerticalAlignment="Top"/>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Visible">
