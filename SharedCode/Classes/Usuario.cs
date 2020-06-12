@@ -42,6 +42,18 @@ namespace SharedCode.Classes
             return $"INSERT INTO USUARIOS (USERNAME, NOMBREAD, TRABAJADOR, CATEGORIA, CORREO, PERFILMIGRADO, BUZONMIGRADO, CONTRASENA)" +
                 $"VALUES ({u.Username}, \"{u.NombreAD}\", \"{u.Trabajador}\", \"{u.Categoria}\", \"{u.Correo}\", {u.PerfilMigrado}, {u.BuzonMigrado}, \"{u.Contrasena}\")";
         }
+        public static string GetUpdateSQL(Usuario u)
+        {
+            return $"UPDATE USUARIOS SET " +
+                $"NOMBREAD      = \"{u.NombreAD}\", " +
+                $"TRABAJADOR    = \"{u.Trabajador}\", " +
+                $"CATEGORIA     = \"{u.Categoria}\", " +
+                $"CORREO        = \"{u.Correo}\", " +
+                $"PERFILMIGRADO = {u.PerfilMigrado}, " +
+                $"BUZONMIGRADO  = {u.BuzonMigrado}, " +
+                $"CONTRASENA    = \"{u.Contrasena}\" " +
+                $"WHERE USUARIOS.USERNAME LIKE {u.Username}";
+        }
 
         /// <summary>
         /// Transforma una <see cref="List{T}"/> de elementos de un <see cref="Dictionary{TKey, TValue}"/> en una <see cref="List{T}"/> de objetos de la clase <see cref="Usuario"/>

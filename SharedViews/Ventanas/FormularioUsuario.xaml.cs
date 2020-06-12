@@ -25,20 +25,65 @@ namespace SharedViews.Ventanas
         private Usuario usuario = new Usuario();
         private bool isinsetrionComplete = false;
         private SearchResult user;
+
+        private bool isEditorMode;
+
         public FormularioUsuario()
         {
             InitializeComponent();
             progressbar.Visibility = Visibility.Hidden;
         }
+        public FormularioUsuario(object usuario)
+        {
+            InitializeComponent();
+            progressbar.Visibility = Visibility.Hidden;
+
+            this.usuario = usuario as Usuario;
+            this.isEditorMode = true;
+
+            UpdateWithEditorMode();
+        }
 
         public bool IsInsertionComplete() => isinsetrionComplete;
+
+        private void UpdateWithEditorMode()
+        {
+            txtbox_username.IsEnabled = false;
+            txtbox_username.Text = $"{usuario.Username}";
+            txtbox_trabajador.Text = usuario.Trabajador.ToUpper();
+            txtbox_categria.Text = usuario.Categoria.ToUpper();
+            txt_correo.Text = usuario.Correo;
+            txt_nombread.Text = usuario.NombreAD.ToUpper();
+            chkbox_migracioncorreo.IsChecked = usuario.BuzonMigrado;
+            chkbox_migracionperfil.IsChecked = usuario.PerfilMigrado;
+            txtbox_contrasena.Password = usuario.Contrasena != null ? ApplicationManager.DecodeFromBase64(usuario.Contrasena) : "";
+        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             // ACEPTAR
             progressbar.Visibility = Visibility.Visible;
 
-            if (user != null)
+            if (isEditorMode)
+            {
+                usuario.NombreAD = txt_nombread.Text.Trim().ToUpper();
+                usuario.Correo = txt_correo.Text.Trim();
+                usuario.Trabajador = txtbox_trabajador.Text.Trim() != "" ? txtbox_trabajador.Text.Trim().ToUpper() : "";
+                usuario.Categoria = txtbox_categria.Text.Trim() != "" ? txtbox_categria.Text.Trim().ToUpper() : "";
+                usuario.BuzonMigrado = chkbox_migracioncorreo.IsChecked.Value;
+                usuario.PerfilMigrado = chkbox_migracionperfil.IsChecked.Value;
+                usuario.Contrasena = txtbox_contrasena.Password.Trim() != "" ? ApplicationManager.EncodeToBase64(txtbox_contrasena.Password.Trim()) : "";
+
+                if (isinsetrionComplete = new DatabaseManager().InsertData(Usuario.GetUpdateSQL(usuario)))
+                {
+                    MessageBox.Show("Usuario agregado correctamente");
+                    this.Close();
+                }
+                else
+                    MessageBox.Show("No se pudo agregar el usuario");
+            }
+
+            else if (user != null)
             {
                 usuario = new Usuario()
                 {

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SharedCode;
+using SharedCode.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,33 @@ namespace SharedViews.Ventanas
     /// </summary>
     public partial class VisorUsuario : Window
     {
-        public VisorUsuario()
+        private Usuario Usuario;
+        public VisorUsuario(object usuario)
         {
             InitializeComponent();
+            this.Usuario = usuario as Usuario;
+
+            UpdateLayout();
+        }
+
+        private new void UpdateLayout()
+        {
+            progressbar.Visibility = Visibility.Collapsed;
+
+            txt_username.Text = $"{Usuario.Username}";
+            txt_nombread.Text = $"{Usuario.NombreAD}";
+            txt_trabajador.Text = $"{Usuario.Trabajador}";
+            txt_categoria.Text = $"{Usuario.Categoria}";
+            txt_correo.Text = $"{Usuario.Correo}";
+            txt_perfilmigrado.Text = Usuario.PerfilMigrado ? "SI" : "NO";
+            txt_buzonmigrado.Text = Usuario.BuzonMigrado ? "SI" : "NO";
+            txt_contrasena.Text = Usuario.Contrasena;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            // REVELAR CONTRASEÑA
+            txt_contrasena.Text = Usuario.Contrasena != null ? ApplicationManager.DecodeFromBase64(Usuario.Contrasena) : "SIN DATOS...";
         }
     }
 }

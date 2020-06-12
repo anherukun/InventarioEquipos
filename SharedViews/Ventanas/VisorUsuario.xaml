@@ -57,7 +57,7 @@
                                FontWeight="DemiBold"/>
                         <Grid Width="245" Margin="0,0,8,0">
                             <TextBlock x:Name="txt_contrasena" Text="SIN DATOS..." TextWrapping="Wrap"/>
-                            <Button Content="Ver contraseña" HorizontalAlignment="Right" Width="100"/>
+                            <Button Content="Ver contraseña" HorizontalAlignment="Right" Width="100" Click="Button_Click"/>
                         </Grid>
                     </StackPanel>
 

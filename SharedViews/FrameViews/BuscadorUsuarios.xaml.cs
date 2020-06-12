@@ -1,5 +1,6 @@
 ﻿using SharedCode;
 using SharedCode.Classes;
+using SharedViews.Ventanas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,16 +65,34 @@ namespace SharedViews.FrameViews
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             // VER DETALLES
+            VisorUsuario visor = new VisorUsuario(Usuarios[lst_registros.SelectedIndex]);
+            visor.Show();
         }
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
             // EDITAR
+            FormularioUsuario form = new FormularioUsuario(Usuarios[lst_registros.SelectedIndex]);
+            form.ShowDialog();
+
+            if (form.IsInsertionComplete())
+            {
+                txtbox_buscar.Clear();
+                IniciarBusqueda(CrearSQL());
+            }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             // NUEVO USUARIO
+            FormularioUsuario form = new FormularioUsuario();
+            form.ShowDialog();
+
+            if (form.IsInsertionComplete())
+            {
+                txtbox_buscar.Clear();
+                IniciarBusqueda(CrearSQL());
+            }
         }
     }
 }
