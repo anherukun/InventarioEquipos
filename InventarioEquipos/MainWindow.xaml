@@ -25,7 +25,7 @@
                 <usercontrol:CatalogControl Name="control_1" Title="Custodias" Subtitle="Subtitlulo"/>
                 <usercontrol:CatalogControl Name="control_2" Title="Equipos" Subtitle="Subtitlulo" MouseDown="CatalogControl_MouseDown_1"/>
                 <usercontrol:CatalogControl Name="control_3" Title="Dispositivos" Subtitle="Subtitlulo" MouseDown="CatalogControl_MouseDown"/>
-                <usercontrol:CatalogControl Name="control_4" Title="Custodias" Subtitle="Subtitlulo"/>
+                <usercontrol:CatalogControl Name="control_4" Title="Usuarios" Subtitle="Subtitlulo" MouseDown="CatalogControl_MouseDown_2"/>
             </StackPanel>
         </Grid>
 

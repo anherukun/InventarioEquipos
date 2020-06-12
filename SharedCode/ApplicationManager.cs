@@ -97,26 +97,24 @@ namespace SharedCode
                 }
 
 
-                MessageBox.Show($"Se ha detectado un error durante la ejecicion del programa, si persiste contacte a su departamento de TI:\n{e.Message}");
+                MessageBox.Show($"Se ha detectado un error durante la ejecicion del programa:\n{e.Message}");
 
                 string txt = $"Mensaje:\t{e.Message}\n" +
                     $"Source: \t{e.Source}\n" +
                     $"StackTrace:\n{e.StackTrace}\n" +
-                    $"TargetSite:\t{e.TargetSite}" +
+                    $"TargetSite:\t{e.TargetSite}\n" +
                     $"HelpLink:\t{e.HelpLink}\n" +
                     $"HResult:\t{e.HResult}\n";
 
                 if (e.Data.Count > 0)
                     foreach (var key in e.Data)
-                    {
-                        txt += $"{key.ToString()}\t";
-                    }
+                        txt += $"{key.ToString()}\n";
 
                 File.WriteAllText($"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\Inventarios\\Error-Log\\{dateTime.Ticks}-Error.txt", txt);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Se detectado un error en la ejecucion y se intento registrar el evento, contacte a su departamto de TI\nRaiz: {e.Message} \nCatcher:{ex.Message}");
+                MessageBox.Show($"Se detectado un error en la ejecucion y no se pudo registrar el evento\nRaiz: {e.Message} \nCatcher:{ex.Message}");
                 throw;
             }
         }

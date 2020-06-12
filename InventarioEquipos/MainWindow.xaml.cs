@@ -84,6 +84,11 @@ namespace InventarioEquipos
                 txt_titulo.Text = "EQUIPOS";
                 MainFrame.Navigate((BuscadorConjuntoEquipos)c);
             }
+            else if (c.GetType() == typeof(BuscadorUsuarios))
+            {
+                txt_titulo.Text = "USUARIOS";
+                MainFrame.Navigate((BuscadorUsuarios)c);
+            }
         }
 
         private void CatalogControl_MouseDown(object sender, MouseButtonEventArgs e)
@@ -99,6 +104,11 @@ namespace InventarioEquipos
         private void CatalogControl_MouseDown_1(object sender, MouseButtonEventArgs e)
         {
             NavigationGoto(new BuscadorConjuntoEquipos(this.progressbar));
+        }
+
+        private void CatalogControl_MouseDown_2(object sender, MouseButtonEventArgs e)
+        {
+            NavigationGoto(new BuscadorUsuarios(this.progressbar));
         }
     }
 }

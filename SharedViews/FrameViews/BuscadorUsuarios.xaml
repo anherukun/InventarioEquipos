@@ -43,10 +43,10 @@
             <ListView x:Name="lst_registros" Margin="0,0,0,18">
                 <ListView.View>
                     <GridView AllowsColumnReorder="False">
-                        <GridViewColumn DisplayMemberBinding="{Binding TDispositivo}" Header="USERNAME"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Marca}" Header="NOMBRE EN DIRECTORIO ACTIVO"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Serie}" Header="TRABAJADOR"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Modelo}" Header="CORREO"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Username}" Header="USERNAME"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding NombreAD}" Header="NOMBRE EN DIRECTORIO ACTIVO"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Trabajador}" Header="TRABAJADOR"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Correo}" Header="CORREO"/>
                     </GridView>
                 </ListView.View>
                 <ListView.Resources>

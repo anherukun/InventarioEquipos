@@ -28,6 +28,7 @@ namespace SharedViews.Ventanas
         public FormularioUsuario()
         {
             InitializeComponent();
+            progressbar.Visibility = Visibility.Hidden;
         }
 
         public bool IsInsertionComplete() => isinsetrionComplete;
@@ -35,6 +36,8 @@ namespace SharedViews.Ventanas
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             // ACEPTAR
+            progressbar.Visibility = Visibility.Visible;
+
             if (user != null)
             {
                 usuario = new Usuario()
@@ -61,11 +64,14 @@ namespace SharedViews.Ventanas
             {
                 MessageBox.Show("Comprueba el usuario antes de guardarlo");
             }
+
+            progressbar.Visibility = Visibility.Hidden;
         }
 
         private async void Button_Click_1(object sender, RoutedEventArgs e)
         {
             // COMPROBACION CON DIRECTORIO ACTIVO
+            progressbar.Visibility = Visibility.Visible;
             try
             {
                 user = await Task.Run(() =>
@@ -95,6 +101,8 @@ namespace SharedViews.Ventanas
             {
                 ApplicationManager.ExceptionHandler(ex);
             }
+
+            progressbar.Visibility = Visibility.Hidden;
         }
     }
 }
