@@ -51,12 +51,12 @@ namespace SharedViews.Ventanas
             txtbox_username.IsEnabled = false;
             txtbox_username.Text = $"{usuario.Username}";
             txtbox_trabajador.Text = usuario.Trabajador.ToUpper();
-            txtbox_categria.Text = usuario.Categoria.ToUpper();
+            txtbox_categria.Text = usuario.Categoria != null ? usuario.Categoria.ToUpper() : "";
             txt_correo.Text = usuario.Correo;
             txt_nombread.Text = usuario.NombreAD.ToUpper();
             chkbox_migracioncorreo.IsChecked = usuario.BuzonMigrado;
             chkbox_migracionperfil.IsChecked = usuario.PerfilMigrado;
-            txtbox_contrasena.Password = usuario.Contrasena != null ? ApplicationManager.DecodeFromBase64(usuario.Contrasena) : "";
+            txtbox_contrasena.Password = usuario.Contrasena != null ? ApplicationManager.DecodeFromBase64(usuario.Contrasena) : "SIN DATOS...";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

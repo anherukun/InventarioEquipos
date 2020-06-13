@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SharedViews.Ventanas"
         mc:Ignorable="d"
-        Title="FormularioDispositivo" Height="315" Width="440" Background="#F2F2F2" ResizeMode="NoResize" FontFamily="Montserrat" ShowInTaskbar="False" WindowStartupLocation="CenterOwner">
+        Title="FormularioDispositivo" Height="315" Width="440" Background="#F2F2F2" ResizeMode="NoResize" FontFamily="Montserrat" WindowStartupLocation="CenterOwner">
     <Grid>
         <StackPanel Margin="16,8" VerticalAlignment="Top">
             <TextBlock Text="NUEVO USUARIO"

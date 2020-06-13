@@ -39,7 +39,11 @@ namespace SharedViews.Ventanas.InputWindows
 
             Dispositivos = await Task.Run(() =>
             {
-                return Dispositivo.FromDictionaryListToList(new DatabaseManager().FromDatabaseToDictionary("SELECT * FROM DISPOSITIVOS WHERE DISPOSITIVOS.DISPOSITIVO NOT LIKE \"PROCESADOR\" AND DISPOSITIVOS.DISPOSITIVO NOT LIKE \"LAPTOP\" ORDER BY DISPOSITIVOS.DISPOSITIVO"));
+                return Dispositivo.FromDictionaryListToList(new DatabaseManager().FromDatabaseToDictionary("SELECT * FROM DISPOSITIVOS WHERE DISPOSITIVOS.SERIE " +
+                    "NOT IN(SELECT DISTINCT DISPOSITIVO FROM REL_CONJUNTOE_DISPOSITIVO) " +
+                    "AND DISPOSITIVOS.DISPOSITIVO NOT LIKE \"LAPTOP\" " +
+                    "AND DISPOSITIVOS.DISPOSITIVO NOT LIKE \"PROCESADOR\" " +
+                    "ORDER BY DISPOSITIVOS.DISPOSITIVO ASC"));
             });
 
             foreach (var item in Dispositivos)
