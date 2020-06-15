@@ -56,7 +56,7 @@ namespace SharedViews.Ventanas
             txt_nombread.Text = usuario.NombreAD.ToUpper();
             chkbox_migracioncorreo.IsChecked = usuario.BuzonMigrado;
             chkbox_migracionperfil.IsChecked = usuario.PerfilMigrado;
-            txtbox_contrasena.Password = usuario.Contrasena != null ? ApplicationManager.DecodeFromBase64(usuario.Contrasena) : "SIN DATOS...";
+            txtbox_contrasena.Password = usuario.Contrasena != null ? ApplicationManager.DecodeFromBase64(usuario.Contrasena) : "";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
