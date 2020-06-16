@@ -52,6 +52,11 @@
                                FontWeight="DemiBold"/>
                         <TextBlock x:Name="txt_ubicacionfisica" Text="SIN DATOS..." Width="218" TextWrapping="Wrap"/>
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="16,4">
+                        <TextBlock Text="DIRECCION IP" Width="120"
+                               FontWeight="DemiBold"/>
+                        <TextBlock x:Name="txt_ipaddress" Text="SIN DATOS..." Width="218" TextWrapping="Wrap"/>
+                    </StackPanel>
 
                     <TextBlock Text="DISPOSITIVOS Y PERIFERICOS" Margin="0,8"
                            FontSize="16" FontWeight="DemiBold"/>

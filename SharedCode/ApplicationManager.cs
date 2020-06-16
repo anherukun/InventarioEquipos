@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Text;
 using System.Windows;
 
@@ -157,6 +158,20 @@ namespace SharedCode
         }
 
         public static string GenerateGUID() => Guid.NewGuid().ToString().ToUpper();
+
+        public static string ResolveIPAddress(string hostname)
+        {
+            try
+            {
+                var host = Dns.GetHostAddresses(hostname);
+                return host[0].ToString();
+            }
+            catch (Exception ex)
+            {
+                ApplicationManager.ExceptionHandler(ex);
+                return "HOST NO DISPONIBLE";
+            }
+        }
     }
 }
 

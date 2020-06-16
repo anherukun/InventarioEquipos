@@ -68,6 +68,7 @@ namespace SharedViews.Ventanas
             txt_marca.Text = Procesador.Marca.ToUpper();
             txt_modelo.Text = Procesador.Modelo.ToUpper();
             txt_arquitectura.Text = ConjuntoEquipo.Arquitectura == 0 ? "SIN DATOS..." : $"{ConjuntoEquipo.Arquitectura} BITS";
+            txt_ipaddress.Text = ApplicationManager.ResolveIPAddress(ConjuntoEquipo.Hostname);
 
             if (Usuario != null)
             {
