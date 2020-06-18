@@ -51,6 +51,7 @@ namespace SharedViews.Ventanas
             if (dispositivoOriginal != null)
             {
                 isRedition = true;
+                btn_autogenerar.IsEnabled = false;
                 dispositivo = dispositivoOriginal as Dispositivo;
             }
 
@@ -183,10 +184,9 @@ namespace SharedViews.Ventanas
             // GUARDAR
             if (FormIsComplete())
             {
+                string tdispositivo = "", marca = "", modelo = "";
                 if (!isRedition)
                 {
-                    string tdispositivo = "", marca = "", modelo = "";
-
                     if (cmd_tdispositivo.SelectedIndex > -1)
                         tdispositivo = tdispostivos[cmd_tdispositivo.SelectedIndex - 1];
 
@@ -203,9 +203,18 @@ namespace SharedViews.Ventanas
                 }
                 else
                 {
-                    dispositivo.Modelo = modelos[cmd_modelo.SelectedIndex - 1];
-                    dispositivo.Marca = marcas[cmd_marca.SelectedIndex - 1];
-                    dispositivo.TDispositivo = tdispostivos[cmd_tdispositivo.SelectedIndex - 1];
+                    if (cmd_tdispositivo.SelectedIndex > -1)
+                        tdispositivo = tdispostivos[cmd_tdispositivo.SelectedIndex - 1];
+
+                    if (cmd_marca.SelectedIndex > -1)
+                        marca = marcas[cmd_marca.SelectedIndex - 1];
+
+                    if (cmd_modelo.SelectedIndex > -1)
+                        modelo = modelos[cmd_modelo.SelectedIndex - 1];
+
+                    dispositivo.Modelo = modelo;
+                    dispositivo.Marca = marca;
+                    dispositivo.TDispositivo = tdispositivo;
                     dispositivo.Inventario = txtbox_inventario.Text.Trim().ToUpper();
 
                     if (isinsertionComplete = new DatabaseManager().InsertData(Dispositivo.GetUpdateSQL(dispositivo)))

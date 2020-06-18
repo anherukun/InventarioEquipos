@@ -17,12 +17,12 @@
                     <TextBlock Text="INFORMACION GENERAL" Margin="0,8"
                            FontSize="16" FontWeight="DemiBold"/>
                     <StackPanel Orientation="Horizontal" Margin="16,4">
-                        <TextBlock Text="HOSTNAME" Width="120"
+                        <TextBlock Text="HOSTNAME *" Width="120"
                                FontWeight="DemiBold"/>
                         <TextBox x:Name="txtbox_hostname" Text="" Width="218"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="16,4">
-                        <TextBlock Text="PROCESADOR" Width="120"
+                        <TextBlock Text="PROCESADOR *" Width="120"
                                    FontWeight="DemiBold"
                                    VerticalAlignment="Center"/>
                         <ComboBox x:Name="cmd_serieprocesador" Width="218" SelectionChanged="cmd_serieprocesador_SelectionChanged"/>
@@ -43,19 +43,21 @@
                         <TextBlock x:Name="txt_modelo" Text="SIN DATOS..."/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="16,4">
-                        <TextBlock Text="ARQUITECTURA" Width="120"
+                        <TextBlock Text="ARQUITECTURA *" Width="120"
                                    FontWeight="DemiBold"/>
-                        <TextBox x:Name="txtbox_arquitectura" Text="" Width="218"/>
+                        <RadioButton x:Name="rad_arq32" GroupName="gp_arq" Content="32 BITS"/>
+                        <RadioButton x:Name="rad_arq64" GroupName="gp_arq" Content="64 BITS"
+                                     Margin="16,0"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="16,4">
-                        <TextBlock Text="DEPARTAMENTO" Width="120"
+                        <TextBlock Text="DEPARTAMENTO *" Width="120"
                                    FontWeight="DemiBold"
                                    VerticalAlignment="Center"/>
                         <ComboBox x:Name="cmd_departamento" Width="218"
                                   IsEditable="true"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="16,4">
-                        <TextBlock Text="UBICACION FISICA" Width="120"
+                        <TextBlock Text="UBICACION FISICA*" Width="120"
                                    FontWeight="DemiBold"/>
                         <TextBox x:Name="txtbox_ubicacionfisica" Width="218"/>
                     </StackPanel>
@@ -120,16 +122,6 @@
                         <TextBlock Text="CORREO ELECTRONICO" Width="120" TextWrapping="Wrap"
                                FontWeight="DemiBold"/>
                         <TextBlock x:Name="txt_correo" Text="SIN DATOS..."/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="16,4">
-                        <TextBlock Text="PERFIL MIGRADO" Width="120" TextWrapping="Wrap"
-                               FontWeight="DemiBold"/>
-                        <TextBlock x:Name="txt_perfilmigrado" Text="SIN DATOS..."/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="16,4">
-                        <TextBlock Text="BUZON MIGRADO" Width="120" TextWrapping="Wrap"
-                               FontWeight="DemiBold"/>
-                        <TextBlock x:Name="txt_buzonmigrado" Text="SIN DATOS..."/>
                     </StackPanel>
                     
                     <Button Height="24" Margin="0,8,8,0" Width="90" HorizontalAlignment="Right" Click="Button_Click_3">

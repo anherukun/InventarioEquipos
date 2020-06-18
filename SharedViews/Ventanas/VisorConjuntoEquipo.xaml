@@ -101,38 +101,6 @@
                                FontWeight="DemiBold"/>
                         <TextBlock x:Name="txt_correo" Text="SIN DATOS..."/>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="16,4">
-                        <TextBlock Text="PERFIL MIGRADO" Width="120" TextWrapping="Wrap"
-                               FontWeight="DemiBold"/>
-                        <TextBlock x:Name="txt_perfilmigrado" Text="SIN DATOS..."/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="16,4">
-                        <TextBlock Text="BUZON MIGRADO" Width="120" TextWrapping="Wrap"
-                               FontWeight="DemiBold"/>
-                        <TextBlock x:Name="txt_buzonmigrado" Text="SIN DATOS..."/>
-                    </StackPanel>
-
-                    <TextBlock Text="PERMISOS DEL USUARIO" Margin="0,8"
-                           FontSize="16" FontWeight="DemiBold"/>
-                    <ListView x:Name="lst_permisos" Height="120" Margin="8,0,8,0">
-                        <ListView.View>
-                            <GridView AllowsColumnReorder="False">
-                                <GridViewColumn DisplayMemberBinding="{Binding TDispositivo}" Header="PERMISO"/>
-                            </GridView>
-                        </ListView.View>
-                        <ListView.Resources>
-                            <ContextMenu x:Key="ItemContextMenu">
-                                <MenuItem Header="Abrir" Command="{Binding Path=DataContext.MoreInfo, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Background="WhiteSmoke"/>
-                                <MenuItem Header="Editar" Command="{Binding Path=DataContext.MoreInfo, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}" Background="WhiteSmoke"/>
-                            </ContextMenu>
-                        </ListView.Resources>
-
-                        <ListView.ItemContainerStyle>
-                            <Style TargetType="{x:Type ListViewItem}" >
-                                <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
-                            </Style>
-                        </ListView.ItemContainerStyle>
-                    </ListView>
                     
                 </StackPanel>
             </StackPanel>

@@ -160,8 +160,12 @@ namespace SharedViews.Ventanas
         private void RefreshWithExistentValues()
         {
             txtbox_hostname.Text = conjunto.Hostname;
-            txtbox_arquitectura.Text = $"{conjunto.Arquitectura}";
             txtbox_ubicacionfisica.Text = conjunto.UbicacionFisica;
+
+            if (conjunto.Arquitectura == 32)
+                rad_arq32.IsChecked = true;
+            else
+                rad_arq64.IsChecked = true;
 
             cmd_serieprocesador.Items.Add(conjunto.Procesador);
             cmd_serieprocesador.SelectedIndex = 0;
@@ -233,80 +237,94 @@ namespace SharedViews.Ventanas
             // GUARDAR
             progressbar.Visibility = Visibility.Visible;
 
-            // SI ES UN CONJUNTO NUEVO
-            if (editorMode != true)
+            if (txtbox_hostname.Text.Trim().Length > 0 && txtbox_ubicacionfisica.Text.Trim().Length > 0 && cmd_serieprocesador.SelectedIndex > -1 && cmd_departamento.SelectedIndex > 0
+                && (rad_arq32.IsChecked == true || rad_arq64.IsChecked == true))
             {
-                conjunto = new ConjuntoEquipos()
+                // SI ES UN CONJUNTO NUEVO
+                if (editorMode != true)
                 {
-                    Procesador = procesadores[cmd_serieprocesador.SelectedIndex - 1].Serie,
-                    Arquitectura = int.Parse(txtbox_arquitectura.Text.Trim()),
-                    Departamento = departamentos[cmd_departamento.SelectedIndex],
-                    Hostname = txtbox_hostname.Text.Trim().ToUpper(),
-                    UbicacionFisica = txtbox_ubicacionfisica.Text.Trim().ToUpper(),
-                    Usuario = cmd_username.SelectedIndex > 0 ? usuarios[cmd_username.SelectedIndex - 1].Username : 0
-                };
-
-                await Task.Run(() =>
-                {
-                    new DatabaseManager().InsertData(ConjuntoEquipos.GetInserSQL(conjunto));
-                });
-            }
-            // SI ES UNA MODIFICACION DE UN CONJUNTO
-            else
-            {
-                conjunto.Arquitectura = int.Parse(txtbox_arquitectura.Text.Trim());
-                conjunto.Departamento = departamentos[cmd_departamento.SelectedIndex];
-                conjunto.UbicacionFisica = txtbox_ubicacionfisica.Text.Trim().ToUpper();
-                conjunto.Hostname = txtbox_hostname.Text.Trim().ToUpper();
-                conjunto.Usuario = cmd_username.SelectedIndex > 0 ? usuarios[cmd_username.SelectedIndex - 1].Username : 0;
-
-                await Task.Run(() =>
-                {
-                    new DatabaseManager().InsertData(ConjuntoEquipos.GetUpdateSQL(conjunto));
-                });
-            }
-            
-
-            if (dispositivosnuevos.Count > 0)
-            {
-                await Task.Run(() =>
-                {
-                    // INSERTA EN LA TABLA RELACION_CONJUNTO_DISPISITIVOS
-                    foreach (var item in dispositivosnuevos)
+                    conjunto = new ConjuntoEquipos()
                     {
-                        new DatabaseManager().InsertData($"INSERT INTO REL_CONJUNTOE_DISPOSITIVO (PROCESADOR, DISPOSITIVO) VALUES (\"{conjunto.Procesador}\", \"{item.Serie}\")");
-                    }
-                });
-            }
-            else
-                progressbar.Visibility = Visibility.Hidden;
+                        Procesador = procesadores[cmd_serieprocesador.SelectedIndex - 1].Serie,
+                        Departamento = departamentos[cmd_departamento.SelectedIndex],
+                        Hostname = txtbox_hostname.Text.Trim().ToUpper(),
+                        UbicacionFisica = txtbox_ubicacionfisica.Text.Trim().ToUpper(),
+                        Usuario = cmd_username.SelectedIndex > 0 ? usuarios[cmd_username.SelectedIndex - 1].Username : 0
+                    };
 
-            if (dispositivoseliminados.Count > 0)
-            {
-                progressbar.Visibility = Visibility.Visible;
+                    if (rad_arq32.IsChecked == true)
+                        conjunto.Arquitectura = 32;
+                    else
+                        conjunto.Arquitectura = 64;
 
-                await Task.Run(() =>
-                {
-                    // ELIMINA EN LA TABLA RELACION_CONJUNTO_DISPISITIVOS
-                    foreach (var item in dispositivoseliminados)
+                    await Task.Run(() =>
                     {
-                        new DatabaseManager().InsertData($"DELETE * FROM REL_CONJUNTOE_DISPOSITIVO WHERE REL_CONJUNTOE_DISPOSITIVO.PROCESADOR LIKE \"{conjunto.Procesador}\" " +
-                            $"AND REL_CONJUNTOE_DISPOSITIVO.DISPOSITIVO LIKE \"{item.Serie}\"");
-                    }
-                });
+                        new DatabaseManager().InsertData(ConjuntoEquipos.GetInserSQL(conjunto));
+                    });
+                }
+                // SI ES UNA MODIFICACION DE UN CONJUNTO
+                else
+                {
+                    if (rad_arq32.IsChecked == true)
+                        conjunto.Arquitectura = 32;
+                    else
+                        conjunto.Arquitectura = 64;
+                    conjunto.Departamento = departamentos[cmd_departamento.SelectedIndex];
+                    conjunto.UbicacionFisica = txtbox_ubicacionfisica.Text.Trim().ToUpper();
+                    conjunto.Hostname = txtbox_hostname.Text.Trim().ToUpper();
+                    conjunto.Usuario = cmd_username.SelectedIndex > 0 ? usuarios[cmd_username.SelectedIndex - 1].Username : 0;
 
-                insertionComplete = true;
+                    await Task.Run(() =>
+                    {
+                        new DatabaseManager().InsertData(ConjuntoEquipos.GetUpdateSQL(conjunto));
+                    });
+                }
+
+
+                if (dispositivosnuevos.Count > 0)
+                {
+                    await Task.Run(() =>
+                    {
+                        // INSERTA EN LA TABLA RELACION_CONJUNTO_DISPISITIVOS
+                        foreach (var item in dispositivosnuevos)
+                        {
+                            new DatabaseManager().InsertData($"INSERT INTO REL_CONJUNTOE_DISPOSITIVO (PROCESADOR, DISPOSITIVO) VALUES (\"{conjunto.Procesador}\", \"{item.Serie}\")");
+                        }
+                    });
+                }
+                else
+                    progressbar.Visibility = Visibility.Hidden;
+
+                if (dispositivoseliminados.Count > 0)
+                {
+                    progressbar.Visibility = Visibility.Visible;
+
+                    await Task.Run(() =>
+                    {
+                        // ELIMINA EN LA TABLA RELACION_CONJUNTO_DISPISITIVOS
+                        foreach (var item in dispositivoseliminados)
+                        {
+                            new DatabaseManager().InsertData($"DELETE * FROM REL_CONJUNTOE_DISPOSITIVO WHERE REL_CONJUNTOE_DISPOSITIVO.PROCESADOR LIKE \"{conjunto.Procesador}\" " +
+                                $"AND REL_CONJUNTOE_DISPOSITIVO.DISPOSITIVO LIKE \"{item.Serie}\"");
+                        }
+                    });
+
+                    insertionComplete = true;
+                }
+                else
+                {
+                    progressbar.Visibility = Visibility.Hidden;
+                    insertionComplete = true;
+                }
+
+                if (insertionComplete)
+                {
+                    this.Close();
+                }
             }
             else
-            {
-                progressbar.Visibility = Visibility.Hidden;
-                insertionComplete = true;
-            }
-
-            if (insertionComplete)
-            {
-                this.Close();
-            }
+                MessageBox.Show("Debe completar los campos obligatorios");
+            progressbar.Visibility = Visibility.Hidden;
         }
 
         private async void cmd_serieprocesador_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -372,9 +390,6 @@ namespace SharedViews.Ventanas
             {
                 txt_usuariodirectorio.Text = "";
                 txt_correo.Text = "";
-
-                txt_perfilmigrado.Text = "";
-                txt_buzonmigrado.Text = "";
             }
             if (cmd_username.SelectedIndex != 0)
             {
@@ -382,9 +397,6 @@ namespace SharedViews.Ventanas
                 {
                     txt_usuariodirectorio.Text = usuarios[cmd_username.SelectedIndex - 1].NombreAD;
                     txt_correo.Text = usuarios[cmd_username.SelectedIndex - 1].Correo;
-
-                    txt_perfilmigrado.Text = usuarios[cmd_username.SelectedIndex - 1].PerfilMigrado ? "SI" : "NO";
-                    txt_buzonmigrado.Text = usuarios[cmd_username.SelectedIndex - 1].BuzonMigrado ? "SI" : "NO";
                 }
             }
             else

@@ -61,12 +61,12 @@
                         </Grid>
                     </StackPanel>
 
-                    <TextBlock Text="PERMISOS DEL USUARIO" Margin="0,8"
+                    <TextBlock Text="MIEMBRO DE" Margin="0,8"
                            FontSize="16" FontWeight="DemiBold"/>
                     <ListView x:Name="lst_dispositivos" Height="120" Margin="8,0,8,0">
                         <ListView.View>
                             <GridView AllowsColumnReorder="False">
-                                <GridViewColumn DisplayMemberBinding="{Binding Permiso}" Header="NOMBRE DEL PERMISO"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Grupo}" Header="Grupo del dominio"/>
                             </GridView>
                         </ListView.View>
                     </ListView>

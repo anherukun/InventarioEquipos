@@ -75,8 +75,6 @@ namespace SharedViews.Ventanas
                 txt_username.Text = $"PEMEX\\{Usuario.Username}";
                 txt_usuariodirectorio.Text = Usuario.NombreAD.ToUpper();
                 txt_correo.Text = Usuario.Correo;
-                txt_perfilmigrado.Text = Usuario.PerfilMigrado ? "SI" : "NO";
-                txt_buzonmigrado.Text = Usuario.BuzonMigrado ? "SI" : "NO";
             }
 
             lst_dispositivos.ItemsSource = Dispositivos;

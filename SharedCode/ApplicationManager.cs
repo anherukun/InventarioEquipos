@@ -98,7 +98,7 @@ namespace SharedCode
                 }
 
 
-                MessageBox.Show($"Se ha detectado un error durante la ejecicion del programa:\n{e.Message}");
+                MessageBox.Show($"Se ha detectado un error durante la ejecicion del programa:\n\n{e.Message}");
 
                 string txt = $"Mensaje:\t{e.Message}\n" +
                     $"Source: \t{e.Source}\n" +
@@ -115,7 +115,7 @@ namespace SharedCode
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Se detectado un error en la ejecucion y no se pudo registrar el evento\nRaiz: {e.Message} \nCatcher:{ex.Message}");
+                MessageBox.Show($"Se detectado un error en la ejecucion y no se pudo registrar el evento\n\nRaiz: {e.Message} \nCatcher:{ex.Message}");
                 throw;
             }
         }
